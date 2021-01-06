@@ -6,8 +6,8 @@ void mouseDragged()
 
 void mouseMoved()
 {
-  camFocusX += (mouseX - pmouseX) * 2;
-  camFocusY += (mouseY - pmouseY) * 2;
+  camFocusPos.x += (mouseX - pmouseX) * 2;
+  camFocusPos.y += (mouseY - pmouseY) * 2;
 }
 
 void keyPressed()

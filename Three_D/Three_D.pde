@@ -1,8 +1,8 @@
 //controls: WASD to move horizontally, space or shift to move vertically (movement is kind of janky)
 //          click and drag to rotate objects
 
-float rX, rY;
-float camX, camY, camZ, camSpeed, camFocusX, camFocusY;
+float rX, rY, camSpeed;
+PVector camPos, camFocusPos, camUp;
 boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
 
 ArrayList<Object> objects = new ArrayList();
@@ -14,12 +14,10 @@ void setup()
   size(800, 800, P3D);
   textureMode(NORMAL);
 
-  camX = width / 2;
-  camY = height / 2;
-  camZ = 1000;
+  camPos = new PVector(width / 2, height / 2, 1000);
+  camFocusPos = new PVector(camPos.x, camPos.y, camPos.z - 1000);
+  camUp = new PVector(0, 1, 0);
   camSpeed = 10;
-  camFocusX = width / 2;
-  camFocusY = height / 2;
 
   loadImages();
   addObjects();
@@ -29,10 +27,12 @@ void draw()
 {
   background(0);
 
-  camera(camX, camY, camZ, camFocusX, camFocusY, camZ - 1000, 0, 1, 0);
+  drawGuide(100, height);
+  lightScene();
+
+  handleCamera();
   
   drawObjects();
-  moveCamera();
 }
 
 void loadImages()
@@ -60,36 +60,87 @@ void addObjects()
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
 }
 
+void drawGuide(int n, int h)
+{ 
+  pushMatrix();
+  translate(-(n * n) / 2, h, -(n * n) / 2);
+  
+  //axis lines
+  strokeWeight(5);
+  stroke(255, 0, 0);
+  line(0, 0, 0, n * n, 0, 0);
+  stroke(0, 255, 0);
+  line(0, 0, 0, 0, -(n * n) / 2, 0);
+  stroke(0, 0, 255);
+  line(0, 0, 0, 0, 0, n * n);
+  
+  //guide lines
+  strokeWeight(0.5);
+  stroke(255);
+  
+  for(int i = 0; i <= n; i++)
+  {
+    //floor
+    line(0, 0, i * n, n * n, 0, i * n);
+    line(i * n, 0, 0, i * n, 0, n * n);
+    //ceiling
+    line(0, -(n * n) / 2, i * n, n * n, -(n * n) / 2, i * n);
+    line(i * n, -(n * n) / 2, 0, i * n, -(n * n) / 2, n * n);
+    //walls
+    //if(i <= n / 2) line(0, -(i * n), 0, n * n, -(i * n), 0);
+    //line(i * n, 0, 0, i * n, -(n * n) / 2, 0);
+  }
+  
+  popMatrix();
+}
+
+void lightScene()
+{
+  ambientLight(64, 64, 64);
+  directionalLight(128, 128, 128, 0, -1, 0);
+  directionalLight(128, 128, 128, 0, 1, 0);
+  spotLight(255, 255, 255, width / 2, height / 2, 400, 0, 0, -1, 0, 0);
+}
+
 void drawObjects()
 {
   for(Object object : objects)
     object.show();
 }
 
-void moveCamera()
+void handleCamera()
 {
+  camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
+  
+  //movement
   if(strafeF)
-    camZ -= camSpeed;
+  {
+    camPos.z -= camSpeed;
+    camFocusPos.z -= camSpeed;
+  }
   if(strafeL)
   {
-    camX -= camSpeed;
-    camFocusX -= camSpeed;
+    camPos.x -= camSpeed;
+    camFocusPos.x -= camSpeed;
   }
   if(strafeB)
-    camZ += camSpeed;
+  {
+    camPos.z += camSpeed;
+    camFocusPos.z += camSpeed;
+  }
   if(strafeR)
   {
-    camX += camSpeed;
-    camFocusX += camSpeed;
+    camPos.x += camSpeed;
+    camFocusPos.x += camSpeed;
   }
   if(strafeU)
   {
-    camY -= camSpeed;
-    camFocusY -= camSpeed;
+    camPos.y -= camSpeed;
+    camFocusPos.y -= camSpeed;
   }
   if(strafeD)
   {
-    camY += camSpeed;
-    camFocusY += camSpeed;
+    camPos.y += camSpeed;
+    camFocusPos.y += camSpeed;
   }
 }
