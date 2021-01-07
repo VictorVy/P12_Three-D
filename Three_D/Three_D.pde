@@ -1,7 +1,11 @@
 //controls: WASD to move horizontally, space or shift to move vertically (movement is kind of janky)
 //          click and drag to rotate objects
 
-float rX, rY, camSpeed;
+import java.awt.Robot;
+
+Robot mouseBot;
+
+float rX, rY, camSpeed, camRotLR, camRotUD;
 PVector camPos, camFocusPos, camUp;
 boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
 
@@ -11,11 +15,16 @@ PImage diamondImg, dirtImg, grassTopImg, grassSideImg;
 
 void setup()
 {
-  size(800, 800, P3D);
+  size(displayWidth, displayHeight, P3D);
+  //noCursor();
   textureMode(NORMAL);
+  
+  try { mouseBot = new Robot(); }
+  catch(Exception e) { e.printStackTrace(); }
 
+  camRotLR = radians(-90);
   camPos = new PVector(width / 2, height / 2, 1000);
-  camFocusPos = new PVector(camPos.x, camPos.y, camPos.z - 1000);
+  camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
   camUp = new PVector(0, 1, 0);
   camSpeed = 10;
 
@@ -31,8 +40,10 @@ void draw()
   lightScene();
 
   handleCamera();
+  wrapMouse();
   
   drawObjects();
+  //drawUI();
 }
 
 void loadImages()
@@ -102,45 +113,49 @@ void lightScene()
   spotLight(255, 255, 255, width / 2, height / 2, 400, 0, 0, -1, 0, 0);
 }
 
-void drawObjects()
-{
-  for(Object object : objects)
-    object.show();
-}
-
 void handleCamera()
 {
   camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
   
-  //movement
+  //movement (hmmm)
   if(strafeF)
   {
     camPos.z -= camSpeed;
-    camFocusPos.z -= camSpeed;
   }
   if(strafeL)
   {
     camPos.x -= camSpeed;
-    camFocusPos.x -= camSpeed;
   }
   if(strafeB)
   {
     camPos.z += camSpeed;
-    camFocusPos.z += camSpeed;
   }
   if(strafeR)
   {
     camPos.x += camSpeed;
-    camFocusPos.x += camSpeed;
   }
   if(strafeU)
   {
     camPos.y -= camSpeed;
-    camFocusPos.y -= camSpeed;
   }
   if(strafeD)
   {
     camPos.y += camSpeed;
-    camFocusPos.y += camSpeed;
   }
+  
+  camFocusPos.x = camPos.x + cos(camRotLR) * 100;
+  camFocusPos.y = camPos.y + tan(camRotUD) * 100;
+  camFocusPos.z = camPos.z + sin(camRotLR) * 100;
+}
+
+void wrapMouse()
+{
+  if(mouseX > width - 2) mouseBot.mouseMove(2, mouseY);
+  if(mouseX < 2) mouseBot.mouseMove(width - 2, mouseY);
+}
+
+void drawObjects()
+{
+  for(Object object : objects)
+    object.show();
 }

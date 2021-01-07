@@ -6,8 +6,11 @@ void mouseDragged()
 
 void mouseMoved()
 {
-  camFocusPos.x += (mouseX - pmouseX) * 2;
-  camFocusPos.y += (mouseY - pmouseY) * 2;
+  if(Math.abs(mouseX - pmouseX) < width - 10) camRotLR += (mouseX - pmouseX) * 0.005;
+  camRotUD += (mouseY - pmouseY) * 0.005;
+  
+  if(camRotUD > radians(89)) camRotUD = radians(89);
+  else if(camRotUD < -radians(89)) camRotUD = -radians(89);
 }
 
 void keyPressed()
