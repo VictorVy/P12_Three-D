@@ -1,7 +1,8 @@
-class RPrism extends Object
+class RPrism extends Object //generic rectangular prism
 {
   float w, h, d;
   PImage topImg, botImg, frontImg, backImg, leftImg, rightImg;
+  boolean rotatable;
   
   public RPrism(PVector pos, float size, color colour) //untextured cube
   {

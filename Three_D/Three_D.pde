@@ -5,6 +5,7 @@ import java.awt.Robot;
 
 Robot mouseBot;
 
+int worldSize = 100;
 float rX, rY, camSpeed, camRotLR, camRotUD;
 PVector camPos, camFocusPos, camUp;
 boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
@@ -16,7 +17,7 @@ PImage diamondImg, dirtImg, grassTopImg, grassSideImg;
 void setup()
 {
   size(displayWidth, displayHeight, P3D);
-  //noCursor();
+  noCursor();
   textureMode(NORMAL);
   
   try { mouseBot = new Robot(); }
@@ -36,22 +37,21 @@ void draw()
 {
   background(0);
 
-  drawGuide(100, height);
+  drawGuide();
   lightScene();
 
   handleCamera();
   wrapMouse();
   
   drawObjects();
-  //drawUI();
 }
 
 void loadImages()
 {
   diamondImg = loadImage("diamond.png");
-  dirtImg = loadImage("dirt.png");
-  grassTopImg = loadImage("grass_top.png");
-  grassSideImg = loadImage("grass_side.png");
+  dirtImg = loadImage("dirt.jpg");
+  grassTopImg = loadImage("grass_top.jpg");
+  grassSideImg = loadImage("grass_side.jpg");
 }
 
 void addObjects()
@@ -69,40 +69,45 @@ void addObjects()
   
   objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
+  
+  //world
+  
+  for(int r = 0; r < worldSize; r++)
+  {
+    for(int c = 0; c < worldSize; c++)
+      objects.add(new Block(new PVector(c * worldSize, height, r * worldSize), worldSize, grassTopImg));
+  }
 }
 
-void drawGuide(int n, int h)
+void drawGuide()
 { 
   pushMatrix();
-  translate(-(n * n) / 2, h, -(n * n) / 2);
+  translate(-(worldSize * worldSize) / 2, height, -(worldSize * worldSize) / 2);
   
   //axis lines
   strokeWeight(5);
   stroke(255, 0, 0);
-  line(0, 0, 0, n * n, 0, 0);
+  line(0, 0, 0, worldSize * worldSize, 0, 0);
   stroke(0, 255, 0);
-  line(0, 0, 0, 0, -(n * n) / 2, 0);
+  line(0, 0, 0, 0, -(worldSize * worldSize) / 2, 0);
   stroke(0, 0, 255);
-  line(0, 0, 0, 0, 0, n * n);
+  line(0, 0, 0, 0, 0, worldSize * worldSize);
   
   //guide lines
   strokeWeight(0.5);
   stroke(255);
   
-  for(int i = 0; i <= n; i++)
+  for(int i = 0; i <= worldSize; i++)
   {
     //floor
-    line(0, 0, i * n, n * n, 0, i * n);
-    line(i * n, 0, 0, i * n, 0, n * n);
+    line(0, 0, i * worldSize, worldSize * worldSize, 0, i * worldSize);
+    line(i * worldSize, 0, 0, i * worldSize, 0, worldSize * worldSize);
     //ceiling
-    line(0, -(n * n) / 2, i * n, n * n, -(n * n) / 2, i * n);
-    line(i * n, -(n * n) / 2, 0, i * n, -(n * n) / 2, n * n);
-    //walls
-    //if(i <= n / 2) line(0, -(i * n), 0, n * n, -(i * n), 0);
-    //line(i * n, 0, 0, i * n, -(n * n) / 2, 0);
+    line(0, -(worldSize * worldSize) / 2, i * worldSize, worldSize * worldSize, -(worldSize * worldSize) / 2, i * worldSize);
+    line(i * worldSize, -(worldSize * worldSize) / 2, 0, i * worldSize, -(worldSize * worldSize) / 2, worldSize * worldSize);
   }
   
-  popMatrix();
+  
 }
 
 void lightScene()
@@ -110,6 +115,10 @@ void lightScene()
   ambientLight(64, 64, 64);
   directionalLight(128, 128, 128, 0, -1, 0);
   directionalLight(128, 128, 128, 0, 1, 0);
+  directionalLight(128, 128, 128, 1, 0, 0);
+  directionalLight(128, 128, 128, -1, 0, 0);
+  directionalLight(128, 128, 128, 0, 0, 1);
+  directionalLight(128, 128, 128, 0, 0, -1);
   spotLight(255, 255, 255, width / 2, height / 2, 400, 0, 0, -1, 0, 0);
 }
 
@@ -120,28 +129,28 @@ void handleCamera()
   //movement (hmmm)
   if(strafeF)
   {
-    camPos.z -= camSpeed;
+    camPos.x += cos(camRotLR) * camSpeed;
+    camPos.z += sin(camRotLR) * camSpeed;
   }
   if(strafeL)
   {
-    camPos.x -= camSpeed;
+    camPos.x -= cos(camRotLR + PI * 0.5) * camSpeed;
+    camPos.z -= sin(camRotLR + PI * 0.5) * camSpeed;
   }
   if(strafeB)
   {
-    camPos.z += camSpeed;
+    camPos.x -= cos(camRotLR) * camSpeed;
+    camPos.z -= sin(camRotLR) * camSpeed;
   }
   if(strafeR)
   {
-    camPos.x += camSpeed;
+    camPos.x += cos(camRotLR + PI * 0.5) * camSpeed;
+    camPos.z += sin(camRotLR + PI * 0.5) * camSpeed;
   }
   if(strafeU)
-  {
     camPos.y -= camSpeed;
-  }
   if(strafeD)
-  {
     camPos.y += camSpeed;
-  }
   
   camFocusPos.x = camPos.x + cos(camRotLR) * 100;
   camFocusPos.y = camPos.y + tan(camRotUD) * 100;
@@ -151,7 +160,10 @@ void handleCamera()
 void wrapMouse()
 {
   if(mouseX > width - 2) mouseBot.mouseMove(2, mouseY);
-  if(mouseX < 2) mouseBot.mouseMove(width - 2, mouseY);
+  else if(mouseX < 2) mouseBot.mouseMove(width - 2, mouseY);
+  
+  if(mouseY > height - 2) mouseBot.mouseMove(mouseX, 2);
+  else if(mouseY < 2) mouseBot.mouseMove(mouseX, height - 2);
 }
 
 void drawObjects()

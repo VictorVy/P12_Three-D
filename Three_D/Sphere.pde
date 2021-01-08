@@ -1,4 +1,4 @@
-class Sphere extends Object
+class Sphere extends Object //generic sphere
 {
   float size;
   
