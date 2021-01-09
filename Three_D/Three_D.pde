@@ -107,7 +107,7 @@ void drawGuide()
     line(i * worldSize, -(worldSize * worldSize) / 2, 0, i * worldSize, -(worldSize * worldSize) / 2, worldSize * worldSize);
   }
   
-  
+  popMatrix();
 }
 
 void lightScene()
