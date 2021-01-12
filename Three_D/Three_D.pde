@@ -1,5 +1,8 @@
-//controls: WASD to move horizontally, space or shift to move vertically (movement is kind of janky)
-//          click and drag to rotate objects
+///////////////////////////////////
+/*                               */
+/*   Press TAB to toggle view    */
+/*       (scroll to zoom)        */
+///////////////////////////////////
 
 import java.awt.Robot;
 
@@ -9,6 +12,9 @@ int worldSize = 100;
 float rX, rY, camSpeed, camRotLR, camRotUD;
 PVector camPos, camFocusPos, camUp;
 boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
+boolean thirdPerson;
+float tpCamDist = 750;
+float camZoomSpeed = 25;
 
 ArrayList<Object> objects = new ArrayList();
 
@@ -40,9 +46,13 @@ void draw()
   drawGuide();
   lightScene();
 
-  handleCamera();
+  if(!thirdPerson)
+    handleFPCamera();
+  else
+    handleTPCamera();
+    
   wrapMouse();
-  
+
   drawObjects();
 }
 
@@ -70,12 +80,13 @@ void addObjects()
   objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
   
-  //world
+  objects.add(new FocusIndicator(10, 255));
   
+  //world
   for(int r = 0; r < worldSize; r++)
   {
     for(int c = 0; c < worldSize; c++)
-      objects.add(new Block(new PVector(c * worldSize, height, r * worldSize), worldSize, grassTopImg));
+      objects.add(new Block(new PVector(c * worldSize, 0, r * worldSize), worldSize, grassTopImg));
   }
 }
 
@@ -122,11 +133,11 @@ void lightScene()
   spotLight(255, 255, 255, width / 2, height / 2, 400, 0, 0, -1, 0, 0);
 }
 
-void handleCamera()
+void handleFPCamera()
 {
   camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
   
-  //movement (hmmm)
+  //movement
   if(strafeF)
   {
     camPos.x += cos(camRotLR) * camSpeed;
@@ -152,9 +163,44 @@ void handleCamera()
   if(strafeD)
     camPos.y += camSpeed;
   
-  camFocusPos.x = camPos.x + cos(camRotLR) * 100;
-  camFocusPos.y = camPos.y + tan(camRotUD) * 100;
-  camFocusPos.z = camPos.z + sin(camRotLR) * 100;
+  camFocusPos.x = camPos.x + cos(camRotLR) * 250;
+  camFocusPos.y = camPos.y + tan(camRotUD) * 250;
+  camFocusPos.z = camPos.z + sin(camRotLR) * 250;
+}
+
+void handleTPCamera()
+{
+  camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
+  
+  //movement
+  if(strafeF)
+  {
+    camFocusPos.x += cos(camRotLR) * camSpeed;
+    camFocusPos.z += sin(camRotLR) * camSpeed;
+  }
+  if(strafeL)
+  {
+    camFocusPos.x -= cos(camRotLR + PI * 0.5) * camSpeed;
+    camFocusPos.z -= sin(camRotLR + PI * 0.5) * camSpeed;
+  }
+  if(strafeB)
+  {
+    camFocusPos.x -= cos(camRotLR) * camSpeed;
+    camFocusPos.z -= sin(camRotLR) * camSpeed;
+  }
+  if(strafeR)
+  {
+    camFocusPos.x += cos(camRotLR + PI * 0.5) * camSpeed;
+    camFocusPos.z += sin(camRotLR + PI * 0.5) * camSpeed;
+  }
+  if(strafeU)
+    camFocusPos.y -= camSpeed;
+  if(strafeD)
+    camFocusPos.y += camSpeed;
+  
+  camPos.x = camFocusPos.x - cos(camRotLR) * tpCamDist;
+  camPos.y = camFocusPos.y - tan(camRotUD) * tpCamDist;
+  camPos.z = camFocusPos.z - sin(camRotLR) * tpCamDist;
 }
 
 void wrapMouse()
