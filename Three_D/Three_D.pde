@@ -8,7 +8,7 @@ import java.awt.Robot;
 
 Robot mouseBot;
 
-int worldSize = 100;
+int blockSize = 100;
 float rX, rY, camSpeed, camRotLR, camRotUD;
 PVector camPos, camFocusPos, camUp;
 boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
@@ -19,6 +19,7 @@ float camZoomSpeed = 25;
 ArrayList<Object> objects = new ArrayList();
 
 PImage diamondImg, dirtImg, grassTopImg, grassSideImg;
+PImage floorMap;
 
 void setup()
 {
@@ -34,6 +35,8 @@ void setup()
   camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
   camUp = new PVector(0, 1, 0);
   camSpeed = 10;
+  
+  floorMap = loadImage("floorMap.png");
 
   loadImages();
   addObjects();
@@ -82,40 +85,54 @@ void addObjects()
   
   objects.add(new FocusIndicator(10, 255));
   
-  //world
-  for(int r = 0; r < worldSize; r++)
+  addFloor();
+}
+
+void addFloor() //using img to map out floor
+{
+  for(int r = 0; r < floorMap.height; r++)
   {
-    for(int c = 0; c < worldSize; c++)
-      objects.add(new Block(new PVector(c * worldSize, 0, r * worldSize), worldSize, grassTopImg));
+    for(int c = 0; c < floorMap.width; c++)
+    {
+      color colour = floorMap.get(c, r);
+      
+      PImage image;
+      
+      if(colour == color(0, 0, 0)) image = dirtImg;
+      else if(colour == color(0, 255, 0)) image = grassTopImg;
+      else continue;
+      
+      objects.add(new Block(new PVector(c * blockSize, 0, r * blockSize), blockSize, image));
+    }
   }
 }
 
 void drawGuide()
 { 
   pushMatrix();
-  translate(-(worldSize * worldSize) / 2, height, -(worldSize * worldSize) / 2);
+  translate(-(blockSize * blockSize) / 2, height, -(blockSize * blockSize) / 2);
   
   //axis lines
   strokeWeight(5);
   stroke(255, 0, 0);
-  line(0, 0, 0, worldSize * worldSize, 0, 0);
+  line(0, 0, 0, blockSize * blockSize, 0, 0);
   stroke(0, 255, 0);
-  line(0, 0, 0, 0, -(worldSize * worldSize) / 2, 0);
+  line(0, 0, 0, 0, -(blockSize * blockSize) / 2, 0);
   stroke(0, 0, 255);
-  line(0, 0, 0, 0, 0, worldSize * worldSize);
+  line(0, 0, 0, 0, 0, blockSize * blockSize);
   
   //guide lines
   strokeWeight(0.5);
   stroke(255);
   
-  for(int i = 0; i <= worldSize; i++)
+  for(int i = 0; i <= blockSize; i++)
   {
     //floor
-    line(0, 0, i * worldSize, worldSize * worldSize, 0, i * worldSize);
-    line(i * worldSize, 0, 0, i * worldSize, 0, worldSize * worldSize);
+    line(0, 0, i * blockSize, blockSize * blockSize, 0, i * blockSize);
+    line(i * blockSize, 0, 0, i * blockSize, 0, blockSize * blockSize);
     //ceiling
-    line(0, -(worldSize * worldSize) / 2, i * worldSize, worldSize * worldSize, -(worldSize * worldSize) / 2, i * worldSize);
-    line(i * worldSize, -(worldSize * worldSize) / 2, 0, i * worldSize, -(worldSize * worldSize) / 2, worldSize * worldSize);
+    line(0, -(blockSize * blockSize) / 2, i * blockSize, blockSize * blockSize, -(blockSize * blockSize) / 2, i * blockSize);
+    line(i * blockSize, -(blockSize * blockSize) / 2, 0, i * blockSize, -(blockSize * blockSize) / 2, blockSize * blockSize);
   }
   
   popMatrix();

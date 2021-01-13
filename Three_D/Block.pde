@@ -26,7 +26,7 @@ class Block extends Object //specialised minecraft-like block
   void show()
   {
     pushMatrix();
-    translate(-(worldSize * worldSize) / 2 + pos.x, height + pos.y, -(worldSize * worldSize) / 2 + pos.z);
+    translate(-(blockSize * blockSize) / 2 + pos.x, height + pos.y, -(blockSize * blockSize) / 2 + pos.z);
     
     noStroke();
     scale(size);
