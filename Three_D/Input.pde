@@ -9,9 +9,9 @@ void mouseMoved()
   if(!thirdPerson)
   {
     if(Math.abs(mouseX - pmouseX) < width - 10)
-      camRotLR += (mouseX - pmouseX) * 0.005;
+      camRotLR += (mouseX - pmouseX) * 0.004;
     if(Math.abs(mouseY - pmouseY) < height - 10)
-      camRotUD += (mouseY - pmouseY) * 0.005;
+      camRotUD += (mouseY - pmouseY) * 0.004;
     
     if(camRotUD > radians(89)) camRotUD = radians(89);
     else if(camRotUD < -radians(89)) camRotUD = -radians(89);

@@ -24,7 +24,7 @@ class Block extends Object //specialised minecraft-like block
   }
   
   void show()
-  {
+  { 
     pushMatrix();
     translate(-(blockSize * blockSize) / 2 + pos.x, height + pos.y, -(blockSize * blockSize) / 2 + pos.z);
     

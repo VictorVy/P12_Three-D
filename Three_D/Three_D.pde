@@ -2,6 +2,7 @@
 /*                               */
 /*   Press TAB to toggle view    */
 /*       (scroll to zoom)        */
+/*                               */
 ///////////////////////////////////
 
 import java.awt.Robot;
@@ -9,7 +10,7 @@ import java.awt.Robot;
 Robot mouseBot;
 
 int blockSize = 100;
-float rX, rY, camSpeed, camRotLR, camRotUD;
+float rX, rY, moveSpeed, camRotLR, camRotUD;
 PVector camPos, camFocusPos, camUp;
 boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
 boolean thirdPerson;
@@ -18,8 +19,8 @@ float camZoomSpeed = 25;
 
 ArrayList<Object> objects = new ArrayList();
 
-PImage diamondImg, dirtImg, grassTopImg, grassSideImg;
-PImage floorMap;
+PImage diamondImg, dirtImg, grassTopImg, grassSideImg, mossyStoneBrickImg, oakPlankImg;
+PImage floorMap, wallMap, ceilingMap;
 
 void setup()
 {
@@ -31,12 +32,10 @@ void setup()
   catch(Exception e) { e.printStackTrace(); }
 
   camRotLR = radians(-90);
-  camPos = new PVector(width / 2, height / 2, 1000);
+  camPos = new PVector(width / 2, height - blockSize * 3, 1000);
   camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
   camUp = new PVector(0, 1, 0);
-  camSpeed = 10;
-  
-  floorMap = loadImage("floorMap.png");
+  moveSpeed = 20;
 
   loadImages();
   addObjects();
@@ -61,10 +60,16 @@ void draw()
 
 void loadImages()
 {
+  floorMap = loadImage("floorMap.png");
+  wallMap = loadImage("wallMap.png");
+  ceilingMap = loadImage("ceilingMap.png");
+  
   diamondImg = loadImage("diamond.png");
   dirtImg = loadImage("dirt.jpg");
-  grassTopImg = loadImage("grass_top.jpg");
-  grassSideImg = loadImage("grass_side.jpg");
+  grassTopImg = loadImage("grassTop.jpg");
+  grassSideImg = loadImage("grassSide.jpg");
+  mossyStoneBrickImg = loadImage("mossyStoneBrick.png");
+  oakPlankImg = loadImage("oakPlank.png");
 }
 
 void addObjects()
@@ -83,26 +88,54 @@ void addObjects()
   objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
   
-  objects.add(new FocusIndicator(10, 255));
+  objects.add(new FocusIndicator(blockSize / 2));
   
-  addFloor();
+  addWorld();
 }
 
-void addFloor() //using img to map out floor
+void addWorld() //using img to map out floor
 {
   for(int r = 0; r < floorMap.height; r++)
   {
     for(int c = 0; c < floorMap.width; c++)
     {
-      color colour = floorMap.get(c, r);
-      
       PImage image;
+      color colour;
       
-      if(colour == color(0, 0, 0)) image = dirtImg;
-      else if(colour == color(0, 255, 0)) image = grassTopImg;
+      //floor
+      colour = floorMap.get(c, r); 
+      
+      if(colour == #000000) image = dirtImg;
+      else if(colour == #00FF00) image = grassTopImg;
+      else if(colour == #9b9b9b) image = mossyStoneBrickImg;
+      else if(colour == #bf8240) image = oakPlankImg;
       else continue;
       
-      objects.add(new Block(new PVector(c * blockSize, 0, r * blockSize), blockSize, image));
+      objects.add(new Block(new PVector(c * blockSize, -blockSize, r * blockSize), blockSize, image));
+      
+      //walls
+      colour = wallMap.get(c, r); 
+            
+      if(colour == #000000) image = dirtImg;
+      else if(colour == #00FF00) image = grassTopImg;
+      else if(colour == #9b9b9b) image = mossyStoneBrickImg;
+      else if(colour == #bf8240) image = oakPlankImg;
+      else continue;
+      
+      objects.add(new Block(new PVector(c * blockSize, -blockSize * 2, r * blockSize), blockSize, image));
+      objects.add(new Block(new PVector(c * blockSize, -blockSize * 3, r * blockSize), blockSize, image));
+      objects.add(new Block(new PVector(c * blockSize, -blockSize * 4, r * blockSize), blockSize, image));
+      
+      //ceiling
+      colour = ceilingMap.get(c, r); 
+            
+      if(colour == #000000) image = dirtImg;
+      else if(colour == #00FF00) image = grassTopImg;
+      else if(colour == #9b9b9b) image = mossyStoneBrickImg;
+      else if(colour == #bf8240) image = oakPlankImg;
+      else continue;
+      
+      objects.add(new Block(new PVector(c * blockSize, -height, r * blockSize), blockSize, image));
     }
   }
 }
@@ -140,14 +173,21 @@ void drawGuide()
 
 void lightScene()
 {
-  ambientLight(64, 64, 64);
+  ambientLight(64, 64, 64); //don't work on textures, for some odd reason
+  
   directionalLight(128, 128, 128, 0, -1, 0);
   directionalLight(128, 128, 128, 0, 1, 0);
   directionalLight(128, 128, 128, 1, 0, 0);
   directionalLight(128, 128, 128, -1, 0, 0);
   directionalLight(128, 128, 128, 0, 0, 1);
   directionalLight(128, 128, 128, 0, 0, -1);
-  spotLight(255, 255, 255, width / 2, height / 2, 400, 0, 0, -1, 0, 0);
+  
+  //spotLight(255, 255, 255, width / 2, height / 2, 400, 0, 0, -1, 0, 0);
+  
+  if(!thirdPerson)
+    pointLight(255, 255, 255, camPos.x, camPos.y, camPos.z);
+  else
+    pointLight(255, 255, 255, camFocusPos.x, camFocusPos.y, camFocusPos.z);
 }
 
 void handleFPCamera()
@@ -157,28 +197,28 @@ void handleFPCamera()
   //movement
   if(strafeF)
   {
-    camPos.x += cos(camRotLR) * camSpeed;
-    camPos.z += sin(camRotLR) * camSpeed;
+    camPos.x += cos(camRotLR) * moveSpeed;
+    camPos.z += sin(camRotLR) * moveSpeed;
   }
   if(strafeL)
   {
-    camPos.x -= cos(camRotLR + PI * 0.5) * camSpeed;
-    camPos.z -= sin(camRotLR + PI * 0.5) * camSpeed;
+    camPos.x -= cos(camRotLR + PI * 0.5) * moveSpeed;
+    camPos.z -= sin(camRotLR + PI * 0.5) * moveSpeed;
   }
   if(strafeB)
   {
-    camPos.x -= cos(camRotLR) * camSpeed;
-    camPos.z -= sin(camRotLR) * camSpeed;
+    camPos.x -= cos(camRotLR) * moveSpeed;
+    camPos.z -= sin(camRotLR) * moveSpeed;
   }
   if(strafeR)
   {
-    camPos.x += cos(camRotLR + PI * 0.5) * camSpeed;
-    camPos.z += sin(camRotLR + PI * 0.5) * camSpeed;
+    camPos.x += cos(camRotLR + PI * 0.5) * moveSpeed;
+    camPos.z += sin(camRotLR + PI * 0.5) * moveSpeed;
   }
   if(strafeU)
-    camPos.y -= camSpeed;
+    camPos.y -= moveSpeed;
   if(strafeD)
-    camPos.y += camSpeed;
+    camPos.y += moveSpeed;
   
   camFocusPos.x = camPos.x + cos(camRotLR) * 250;
   camFocusPos.y = camPos.y + tan(camRotUD) * 250;
@@ -192,28 +232,28 @@ void handleTPCamera()
   //movement
   if(strafeF)
   {
-    camFocusPos.x += cos(camRotLR) * camSpeed;
-    camFocusPos.z += sin(camRotLR) * camSpeed;
+    camFocusPos.x += cos(camRotLR) * moveSpeed;
+    camFocusPos.z += sin(camRotLR) * moveSpeed;
   }
   if(strafeL)
   {
-    camFocusPos.x -= cos(camRotLR + PI * 0.5) * camSpeed;
-    camFocusPos.z -= sin(camRotLR + PI * 0.5) * camSpeed;
+    camFocusPos.x -= cos(camRotLR + PI * 0.5) * moveSpeed;
+    camFocusPos.z -= sin(camRotLR + PI * 0.5) * moveSpeed;
   }
   if(strafeB)
   {
-    camFocusPos.x -= cos(camRotLR) * camSpeed;
-    camFocusPos.z -= sin(camRotLR) * camSpeed;
+    camFocusPos.x -= cos(camRotLR) * moveSpeed;
+    camFocusPos.z -= sin(camRotLR) * moveSpeed;
   }
   if(strafeR)
   {
-    camFocusPos.x += cos(camRotLR + PI * 0.5) * camSpeed;
-    camFocusPos.z += sin(camRotLR + PI * 0.5) * camSpeed;
+    camFocusPos.x += cos(camRotLR + PI * 0.5) * moveSpeed;
+    camFocusPos.z += sin(camRotLR + PI * 0.5) * moveSpeed;
   }
   if(strafeU)
-    camFocusPos.y -= camSpeed;
+    camFocusPos.y -= moveSpeed;
   if(strafeD)
-    camFocusPos.y += camSpeed;
+    camFocusPos.y += moveSpeed;
   
   camPos.x = camFocusPos.x - cos(camRotLR) * tpCamDist;
   camPos.y = camFocusPos.y - tan(camRotUD) * tpCamDist;
