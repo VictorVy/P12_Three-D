@@ -4,6 +4,8 @@ class Sphere extends Object //generic sphere
   
   public Sphere(PVector pos, float size, color colour)
   {
+    super();
+    
     this.pos = pos;
     this.size = size;
     this.colour = colour;

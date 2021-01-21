@@ -5,6 +5,8 @@ class Block extends Object //specialised minecraft-like block
   
   public Block(PVector pos, int size, PImage texture) //same texture on all faces
   {
+    super();
+    
     this.pos = pos;
     this.size = size;
     this.topImg = this.botImg = this.frontImg = this.backImg = this.leftImg = this.rightImg = texture;
@@ -12,6 +14,8 @@ class Block extends Object //specialised minecraft-like block
   }
   public Block(PVector pos, int size, PImage topImg, PImage botImg, PImage frontImg, PImage backImg, PImage leftImg, PImage rightImg) //different textures on faces
   {
+    super();
+    
     this.pos = pos;
     this.size = size;
     this.topImg = topImg;

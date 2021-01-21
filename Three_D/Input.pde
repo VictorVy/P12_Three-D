@@ -1,3 +1,17 @@
+void mouseReleased()
+{
+  switch(mouseButton)
+  {
+    case LEFT:
+      if(shootTimer > 60)
+      {
+        shoot();
+        shootTimer = 0;
+      }
+      break;
+  }
+}
+
 void mouseDragged() //rotate objects
 {
   rX += (pmouseY - mouseY) * 0.01;
@@ -6,26 +20,13 @@ void mouseDragged() //rotate objects
 
 void mouseMoved()
 {
-  if(!thirdPerson)
-  {
-    if(Math.abs(mouseX - pmouseX) < width - 10)
-      camRotLR += (mouseX - pmouseX) * 0.004;
-    if(Math.abs(mouseY - pmouseY) < height - 10)
-      camRotUD += (mouseY - pmouseY) * 0.004;
-    
-    if(camRotUD > radians(89)) camRotUD = radians(89);
+  if(Math.abs(mouseX - pmouseX) < width - 10)
+    camRotLR += (mouseX - pmouseX) * (thirdPerson ? 0.005 : 0.004);
+  if(Math.abs(mouseY - pmouseY) < height - 10)
+    camRotUD += (mouseY - pmouseY) * (thirdPerson ? 0.005 : 0.004);
+  
+  if(camRotUD > radians(89)) camRotUD = radians(89);
     else if(camRotUD < -radians(89)) camRotUD = -radians(89);
-  }
-  else
-  {
-    if(Math.abs(mouseX - pmouseX) < width - 10)
-      camRotLR += (mouseX - pmouseX) * 0.005;
-    if(Math.abs(mouseY - pmouseY) < height - 10)
-      camRotUD += (mouseY - pmouseY) * 0.005;
-    
-    if(camRotUD > radians(89)) camRotUD = radians(89);
-    else if(camRotUD < -radians(89)) camRotUD = -radians(89);
-  }
 }
 
 void mouseWheel(MouseEvent event)
@@ -99,4 +100,13 @@ void keyReleased()
       camPos = tmp;
       break;
   }
+}
+
+void wrapMouse()
+{
+  if (mouseX > width - 2) mouseBot.mouseMove(2, mouseY);
+  else if (mouseX < 2) mouseBot.mouseMove(width - 2, mouseY);
+
+  if (mouseY > height - 2) mouseBot.mouseMove(mouseX, 2);
+  else if (mouseY < 2) mouseBot.mouseMove(mouseX, height - 2);
 }

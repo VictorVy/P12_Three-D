@@ -6,6 +6,8 @@ class RPrism extends Object //generic rectangular prism
   
   public RPrism(PVector pos, float size, color colour) //untextured cube
   {
+    super();
+    
     this.pos = pos;
     w = h = d = size;
     this.colour = colour;
@@ -13,6 +15,8 @@ class RPrism extends Object //generic rectangular prism
   }
   public RPrism(PVector pos, float size, PImage texture) //textured cube (same textures on all faces)
   {
+    super();
+    
     this.pos = pos;
     w = h = d = size;
     this.topImg = this.botImg = this.frontImg = this.backImg = this.leftImg = this.rightImg = texture;
@@ -20,6 +24,8 @@ class RPrism extends Object //generic rectangular prism
   }
   public RPrism(PVector pos, float size, PImage topImg, PImage botImg, PImage frontImg, PImage backImg, PImage leftImg, PImage rightImg) //textured cube (different textures on faces)
   {
+    super();
+    
     this.pos = pos;
     w = h = d = size;
     this.topImg = topImg;
@@ -32,6 +38,8 @@ class RPrism extends Object //generic rectangular prism
   }
   public RPrism(PVector pos, float w, float h, float d, color colour) //untextured rectangular prism
   {
+    super();
+    
     this.pos = pos;
     this.w = w;
     this.h = h;
