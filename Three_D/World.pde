@@ -33,37 +33,46 @@ void addWorld() //using img to map out floor
       //floor
       colour = floorMap.get(c, r); 
 
-      if (colour == #000000) image = dirtImg;
-      else if (colour == #00FF00) image = grassTopImg;
-      else if (colour == #9b9b9b) image = mossyStoneBrickImg;
-      else if (colour == #bf8240) image = oakPlankImg;
-      else continue;
-
-      objects.add(new Block(new PVector(c * blockSize, -blockSize, r * blockSize), blockSize, image));
-
+      if(colour != white)
+      {
+        if (colour == #000000) image = dirtImg;
+        else if (colour == #00FF00) image = grassTopImg;
+        else if (colour == #9b9b9b) image = mossyStoneBrickImg;
+        else if (colour == #bf8240) image = oakPlankImg;
+        else image = dirtImg;
+  
+        objects.add(new Block(new PVector(c * blockSize, -blockSize, r * blockSize), blockSize, image));
+      }
+      
       //walls
       colour = wallMap.get(c, r); 
 
-      if (colour == #000000) image = dirtImg;
-      else if (colour == #00FF00) image = grassTopImg;
-      else if (colour == #9b9b9b) image = mossyStoneBrickImg;
-      else if (colour == #bf8240) image = oakPlankImg;
-      else continue;
-
-      objects.add(new Block(new PVector(c * blockSize, -blockSize * 2, r * blockSize), blockSize, image));
-      objects.add(new Block(new PVector(c * blockSize, -blockSize * 3, r * blockSize), blockSize, image));
-      objects.add(new Block(new PVector(c * blockSize, -blockSize * 4, r * blockSize), blockSize, image));
+      if(colour != white)
+      {
+        if (colour == #000000) image = dirtImg;
+        else if (colour == #00FF00) image = grassTopImg;
+        else if (colour == #9b9b9b) image = mossyStoneBrickImg;
+        else if (colour == #bf8240) image = oakPlankImg;
+        else image = dirtImg;
+  
+        objects.add(new Block(new PVector(c * blockSize, -blockSize * 2, r * blockSize), blockSize, image));
+        objects.add(new Block(new PVector(c * blockSize, -blockSize * 3, r * blockSize), blockSize, image));
+        objects.add(new Block(new PVector(c * blockSize, -blockSize * 4, r * blockSize), blockSize, image));
+      }
 
       //ceiling
       colour = ceilingMap.get(c, r); 
 
-      if (colour == #000000) image = dirtImg;
-      else if (colour == #00FF00) image = grassTopImg;
-      else if (colour == #9b9b9b) image = mossyStoneBrickImg;
-      else if (colour == #bf8240) image = oakPlankImg;
-      else continue;
-
-      objects.add(new Block(new PVector(c * blockSize, -height, r * blockSize), blockSize, image));
+      if(colour != white)
+      {
+        if (colour == #000000) image = dirtImg;
+        else if (colour == #00FF00) image = grassTopImg;
+        else if (colour == #9b9b9b) image = mossyStoneBrickImg;
+        else if (colour == #bf8240) image = oakPlankImg;
+        else image = dirtImg;
+  
+        objects.add(new Block(new PVector(c * blockSize, -height, r * blockSize), blockSize, image));
+      }
     }
   }
 }
