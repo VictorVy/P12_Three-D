@@ -12,7 +12,7 @@ class Object
   
   void show()
   {
-    fill(colour);
+    world.fill(colour);
   }
   
   void act()

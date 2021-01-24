@@ -1,6 +1,6 @@
 void handleFPCamera()
 {
-  camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
+  world.camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
 
   //movement
   if (strafeF && moveFront())
@@ -35,7 +35,7 @@ void handleFPCamera()
 
 void handleTPCamera()
 {
-  camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
+  world.camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);
 
   //movement
   if (strafeF && moveFront())

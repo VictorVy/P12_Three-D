@@ -52,79 +52,79 @@ class RPrism extends Object //generic rectangular prism
   {
     super.show();
     
-    pushMatrix();
+    world.pushMatrix();
     
-    translate(pos.x, pos.y, pos.z);
-    rotateX(rX);
-    rotateY(rY);
+    world.translate(pos.x, pos.y, pos.z);
+    world.rotateX(rX);
+    world.rotateY(rY);
     
     if(textured)
     {
-      noStroke();
-      scale(100);
+      world.noStroke();
+      world.scale(100);
       
       //top
-      beginShape(QUADS);
-      texture(topImg);
-      vertex(-0.5, -0.5, -0.5, 0, 0);
-      vertex(0.5, -0.5, -0.5, 1, 0);
-      vertex(0.5, -0.5, 0.5, 1, 1);
-      vertex(-0.5, -0.5, 0.5, 0, 1);
-      endShape();
+      world.beginShape(QUADS);
+      world.texture(topImg);
+      world.vertex(-0.5, -0.5, -0.5, 0, 0);
+      world.vertex(0.5, -0.5, -0.5, 1, 0);
+      world.vertex(0.5, -0.5, 0.5, 1, 1);
+      world.vertex(-0.5, -0.5, 0.5, 0, 1);
+      world.endShape();
       
       //bottom
-      beginShape(QUADS);
-      texture(botImg);
-      vertex(-0.5, 0.5, -0.5, 0, 0);
-      vertex(0.5, 0.5, -0.5, 1, 0);
-      vertex(0.5, 0.5, 0.5, 1, 1);
-      vertex(-0.5, 0.5, 0.5, 0, 1);
-      endShape();
+      world.beginShape(QUADS);
+      world.texture(botImg);
+      world.vertex(-0.5, 0.5, -0.5, 0, 0);
+      world.vertex(0.5, 0.5, -0.5, 1, 0);
+      world.vertex(0.5, 0.5, 0.5, 1, 1);
+      world.vertex(-0.5, 0.5, 0.5, 0, 1);
+      world.endShape();
       
       //front
-      beginShape(QUADS);
-      texture(frontImg);
-      vertex(-0.5, -0.5, 0.5, 0, 0);
-      vertex(0.5, -0.5, 0.5, 1, 0);
-      vertex(0.5, 0.5, 0.5, 1, 1);
-      vertex(-0.5, 0.5, 0.5, 0, 1);
-      endShape();
+      world.beginShape(QUADS);
+      world.texture(frontImg);
+      world.vertex(-0.5, -0.5, 0.5, 0, 0);
+      world.vertex(0.5, -0.5, 0.5, 1, 0);
+      world.vertex(0.5, 0.5, 0.5, 1, 1);
+      world.vertex(-0.5, 0.5, 0.5, 0, 1);
+      world.endShape();
       
       //back
-      beginShape(QUADS);
-      texture(backImg);
-      vertex(-0.5, -0.5, -0.5, 0, 0);
-      vertex(0.5, -0.5, -0.5, 1, 0);
-      vertex(0.5, 0.5, -0.5, 1, 1);
-      vertex(-0.5, 0.5, -0.5, 0, 1);
-      endShape();
+      world.beginShape(QUADS);
+      world.texture(backImg);
+      world.vertex(-0.5, -0.5, -0.5, 0, 0);
+      world.vertex(0.5, -0.5, -0.5, 1, 0);
+      world.vertex(0.5, 0.5, -0.5, 1, 1);
+      world.vertex(-0.5, 0.5, -0.5, 0, 1);
+      world.endShape();
       
       //left
-      beginShape(QUADS);
-      texture(leftImg);
-      vertex(-0.5, -0.5, -0.5, 0, 0);
-      vertex(-0.5, -0.5, 0.5, 1, 0);
-      vertex(-0.5, 0.5, 0.5, 1, 1);
-      vertex(-0.5, 0.5, -0.5, 0, 1);
-      endShape();
+      world.beginShape(QUADS);
+      world.texture(leftImg);
+      world.vertex(-0.5, -0.5, -0.5, 0, 0);
+      world.vertex(-0.5, -0.5, 0.5, 1, 0);
+      world.vertex(-0.5, 0.5, 0.5, 1, 1);
+      world.vertex(-0.5, 0.5, -0.5, 0, 1);
+      world.endShape();
       
       //right
-      beginShape(QUADS);
-      texture(rightImg);
-      vertex(0.5, -0.5, -0.5, 0, 0);
-      vertex(0.5, -0.5, 0.5, 1, 0);
-      vertex(0.5, 0.5, 0.5, 1, 1);
-      vertex(0.5, 0.5, -0.5, 0, 1);
-      endShape();
+      world.beginShape(QUADS);
+      world.texture(rightImg);
+      world.vertex(0.5, -0.5, -0.5, 0, 0);
+      world.vertex(0.5, -0.5, 0.5, 1, 0);
+      world.vertex(0.5, 0.5, 0.5, 1, 1);
+      world.vertex(0.5, 0.5, -0.5, 0, 1);
+      world.endShape();
     }
     else
     {
-      stroke(0);
-      strokeWeight(2);
+      world.stroke(0);
+      world.strokeWeight(2);
       
-      box(w, h, d);
+      world.box(w, h, d);
     }
     
-    popMatrix();
+    world.popMatrix();
   }
 }

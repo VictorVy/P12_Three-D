@@ -29,66 +29,66 @@ class Block extends Object //specialised minecraft-like block
   
   void show()
   { 
-    pushMatrix();
-    translate(-(blockSize * blockSize) / 2 + pos.x, height + pos.y, -(blockSize * blockSize) / 2 + pos.z);
+    world.pushMatrix();
+    world.translate(-(blockSize * blockSize) / 2 + pos.x, height + pos.y, -(blockSize * blockSize) / 2 + pos.z);
     
-    noStroke();
-    scale(size);
+    world.noStroke();
+    world.scale(size);
     
     //top
-    beginShape(QUADS);
-    texture(topImg);
-    vertex(0, 0, 0, 0, 0);
-    vertex(1, 0, 0, 1, 0);
-    vertex(1, 0, 1, 1, 1);
-    vertex(0, 0, 1, 0, 1);
-    endShape();
+    world.beginShape(QUADS);
+    world.texture(topImg);
+    world.vertex(0, 0, 0, 0, 0);
+    world.vertex(1, 0, 0, 1, 0);
+    world.vertex(1, 0, 1, 1, 1);
+    world.vertex(0, 0, 1, 0, 1);
+    world.endShape();
     
     //bottom
-    beginShape(QUADS);
-    texture(botImg);
-    vertex(0, 1, 0, 0, 0);
-    vertex(1, 1, 0, 1, 0);
-    vertex(1, 1, 1, 1, 1);
-    vertex(0, 1, 1, 0, 1);
-    endShape();
+    world.beginShape(QUADS);
+    world.texture(botImg);
+    world.vertex(0, 1, 0, 0, 0);
+    world.vertex(1, 1, 0, 1, 0);
+    world.vertex(1, 1, 1, 1, 1);
+    world.vertex(0, 1, 1, 0, 1);
+    world.endShape();
     
     //front
-    beginShape(QUADS);
-    texture(frontImg);
-    vertex(0, 0, 1, 0, 0);
-    vertex(1, 0, 1, 1, 0);
-    vertex(1, 1, 1, 1, 1);
-    vertex(0, 1, 1, 0, 1);
-    endShape();
+    world.beginShape(QUADS);
+    world.texture(frontImg);
+    world.vertex(0, 0, 1, 0, 0);
+    world.vertex(1, 0, 1, 1, 0);
+    world.vertex(1, 1, 1, 1, 1);
+    world.vertex(0, 1, 1, 0, 1);
+    world.endShape();
     
     //back
-    beginShape(QUADS);
-    texture(backImg);
-    vertex(0, 0, 0, 0, 0);
-    vertex(1, 0, 0, 1, 0);
-    vertex(1, 1, 0, 1, 1);
-    vertex(0, 1, 0, 0, 1);
-    endShape();
+    world.beginShape(QUADS);
+    world.texture(backImg);
+    world.vertex(0, 0, 0, 0, 0);
+    world.vertex(1, 0, 0, 1, 0);
+    world.vertex(1, 1, 0, 1, 1);
+    world.vertex(0, 1, 0, 0, 1);
+    world.endShape();
     
     //left
-    beginShape(QUADS);
-    texture(leftImg);
-    vertex(0, 0, 0, 0, 0);
-    vertex(0, 0, 1, 1, 0);
-    vertex(0, 1, 1, 1, 1);
-    vertex(0, 1, 0, 0, 1);
-    endShape();
+    world.beginShape(QUADS);
+    world.texture(leftImg);
+    world.vertex(0, 0, 0, 0, 0);
+    world.vertex(0, 0, 1, 1, 0);
+    world.vertex(0, 1, 1, 1, 1);
+    world.vertex(0, 1, 0, 0, 1);
+    world.endShape();
     
     //right
-    beginShape(QUADS);
-    texture(rightImg);
-    vertex(1, 0, 0, 0, 0);
-    vertex(1, 0, 1, 1, 0);
-    vertex(1, 1, 1, 1, 1);
-    vertex(1, 1, 0, 0, 1);
-    endShape();
+    world.beginShape(QUADS);
+    world.texture(rightImg);
+    world.vertex(1, 0, 0, 0, 0);
+    world.vertex(1, 0, 1, 1, 0);
+    world.vertex(1, 1, 1, 1, 1);
+    world.vertex(1, 1, 0, 0, 1);
+    world.endShape();
     
-    popMatrix();
+    world.popMatrix();
   }
 }

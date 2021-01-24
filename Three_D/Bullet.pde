@@ -8,6 +8,7 @@ class Bullet extends Object
   {
     super();
     
+    colour = white;
     size = 10;
     
     if(!thirdPerson)
@@ -26,12 +27,12 @@ class Bullet extends Object
   
   void show()
   {
-    pushMatrix();
-    translate(pos.x, pos.y, pos.z);
-    fill(white);
-    noStroke();
-    box(size);
-    popMatrix();
+    world.pushMatrix();
+    world.translate(pos.x, pos.y, pos.z);
+    world.fill(colour);
+    world.noStroke();
+    world.box(size);
+    world.popMatrix();
   }
   
   void act()
@@ -39,13 +40,13 @@ class Bullet extends Object
     int mapX = int(pos.x + (blockSize * blockSize) / 2) / blockSize;
     int mapY = int(pos.z + (blockSize * blockSize) / 2) / blockSize;
     
-    if(wallMap.get(mapX, mapY) == white && pos.y < height)
+    if(wallMap.get(mapX, mapY) == white && pos.y < height - blockSize)
       pos.add(dir);
     else
     {
       hp--;
-      //for(int i = 0; i < 8; i++)
-      //  objects.add(new Particle(pos));
+      for(int i = 0; i < 16; i++)
+        objects.add(new Particle(pos));
     }
   }
 }

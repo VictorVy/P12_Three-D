@@ -10,15 +10,17 @@ import java.awt.Robot;
 Robot mouseBot;
 
 int blockSize = 100;
+int shootTimer = 20;
+int collideDist = 150;
+int crosshairSize = 15;
 float rX, rY, moveSpeed, camRotLR, camRotUD;
-PVector camPos, camFocusPos, camUp;
-boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
-boolean thirdPerson;
 float tpCamDist = 750;
 float camZoomSpeed = 25;
-int collideDist = 150;
 
-int shootTimer = 20;
+PVector camPos, camFocusPos, camUp;
+
+boolean strafeR, strafeL, strafeF, strafeB, strafeU, strafeD;
+boolean thirdPerson;
 
 ArrayList<Object> objects = new ArrayList();
 
@@ -31,18 +33,18 @@ color green = #00FF00;
 color grey = #9b9b9b;
 color brown = #bf8240;
 
+PGraphics world, hud;
+
 void setup()
 {
-  size(displayWidth, displayHeight, P3D);
+  world = createGraphics(width, height, P3D);
+  hud = createGraphics(width, height, P2D);
+  
+  size(displayWidth, displayHeight, P2D);
   noCursor();
-  textureMode(NORMAL);
 
-  try { 
-    mouseBot = new Robot();
-  }
-  catch(Exception e) { 
-    e.printStackTrace();
-  }
+  try{ mouseBot = new Robot(); }
+  catch(Exception e) { e.printStackTrace(); }
 
   camRotLR = radians(-90);
   camPos = new PVector(width / 2, height - blockSize * 3, 1000);
@@ -56,20 +58,11 @@ void setup()
 
 void draw()
 {
-  background(0);
-
-  drawGuide();
-  lightScene();
-
-  if (!thirdPerson)
-    handleFPCamera();
-  else
-    handleTPCamera();
-
-  shootTimer++;
-
-  wrapMouse();
-  drawObjects();
+  worldDraw();
+  image(world, 0, 0);
+  
+  hudDraw();
+  image(hud, 0, 0);
 }
 
 void loadImages()

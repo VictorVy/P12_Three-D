@@ -15,17 +15,17 @@ class Sphere extends Object //generic sphere
   {
     super.show();
     
-    stroke(0);
-    strokeWeight(0.4);
+    world.stroke(0);
+    world.strokeWeight(0.4);
     
-    pushMatrix();
+    world.pushMatrix();
     
-    translate(pos.x, pos.y, pos.z);
-    rotateX(rX);
-    rotateY(rY);
+    world.translate(pos.x, pos.y, pos.z);
+    world.rotateX(rX);
+    world.rotateY(rY);
     
-    sphere(size);
+    world.sphere(size);
     
-    popMatrix();
+    world.popMatrix();
   }
 }
