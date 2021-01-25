@@ -3,7 +3,7 @@ void mouseReleased()
   switch(mouseButton)
   {
     case LEFT:
-      if(shootTimer > 60)
+      if(shootTimer > 20)
       {
         shoot();
         shootTimer = 0;

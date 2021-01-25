@@ -9,7 +9,7 @@ class Particle extends Object
     
     this.pos = pos;
     dir = new PVector(random(-10, 10), random(-10, 1), random(-10, 10));
-    speed = random(4, 8);
+    speed = random(5, 10);
     colour = white;
     size = random(2, 6);
     alpha = random(200, 255);

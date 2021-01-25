@@ -5,8 +5,8 @@ class Snowflake extends Object
   public Snowflake(PVector pos)
   {
     super();
-    speed = random(3, 6);
-    size = random(2, 4);
+    speed = random(4, 7);
+    size = random(1.5, 3.5);
     alpha = random(200, 255);
     this.pos = pos; 
     colour = 225;

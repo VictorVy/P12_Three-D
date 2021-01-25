@@ -10,7 +10,7 @@ import java.awt.Robot;
 Robot mouseBot;
 
 int blockSize = 100;
-int shootTimer = 20;
+int shootTimer = 0;
 int collideDist = 150;
 int crosshairSize = 15;
 float rX, rY, moveSpeed, camRotLR, camRotUD;
@@ -81,12 +81,14 @@ void loadImages()
 
 void addObjects()
 {
+  //traffic light (rotatable)
   objects.add(new RPrism(new PVector(width / 2, height / 2, -200), width / 3, height, 100, 200));
 
   objects.add(new Sphere(new PVector(width / 2, height / 2 - 175, 0), 75, color(0, 255, 0)));
   objects.add(new Sphere(new PVector(width / 2, height / 2, 0), 75, color(255, 255, 0)));
   objects.add(new Sphere(new PVector(width / 2, height / 2 + 175, 0), 75, color(255, 0, 0)));
 
+  //floating blocks (rotatable)
   objects.add(new RPrism(new PVector(200, 200, 100), 150, grassTopImg, dirtImg, grassSideImg, grassSideImg, grassSideImg, grassSideImg));
   objects.add(new RPrism(new PVector(width - 200, 200, 100), 150, grassTopImg, dirtImg, grassSideImg, grassSideImg, grassSideImg, grassSideImg));
   objects.add(new RPrism(new PVector(width - 200, height - 200, 100), 150, dirtImg));
@@ -95,8 +97,12 @@ void addObjects()
   objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
 
+  //third-person chracter
   objects.add(new FocusIndicator(blockSize / 2));
-  objects.add(new SnowCloud(200, 50, 200, 250));
+  
+  //snow clouds
+  objects.add(new SnowCloud(400, 25, 400, 250));
+  objects.add(new SnowCloud(new PVector(width / 2, -blockSize, 0), width, 25, 400));
 
   addWorld();
 }

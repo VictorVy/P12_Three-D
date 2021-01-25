@@ -68,10 +68,7 @@ void handleTPCamera()
   camPos.z = camFocusPos.z - sin(camRotLR) * tpCamDist;
 }
 
-void shoot()
-{
-  objects.add(new Bullet());
-}
+void shoot() { objects.add(new Bullet()); }
 
 boolean moveFront()
 {
