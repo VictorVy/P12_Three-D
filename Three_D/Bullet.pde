@@ -2,7 +2,7 @@ class Bullet extends Object
 {
   int size;
   PVector dir;
-  float speed;
+  float speed, gravity, gravitySpeed;
   
   public Bullet()
   {
@@ -23,13 +23,15 @@ class Bullet extends Object
     }
     
     dir.setMag(speed = 50);
+    gravity = 1;
+    gravitySpeed = 0.5;
   }
   
   void show()
   {
     world.pushMatrix();
     world.translate(pos.x, pos.y, pos.z);
-    world.fill(colour);
+    world.fill(colour, alpha);
     world.noStroke();
     world.box(size);
     world.popMatrix();
@@ -41,12 +43,16 @@ class Bullet extends Object
     int mapY = int(pos.z + (blockSize * blockSize) / 2) / blockSize;
     
     if(wallMap.get(mapX, mapY) == white && pos.y < height - blockSize)
+    {
       pos.add(dir);
+      pos.y += gravity;
+      gravity += gravitySpeed;
+    }
     else
     {
       hp--;
       for(int i = 0; i < 16; i++)
-        objects.add(new Particle(pos));
+        objects.add(new Particle(pos.copy()));
     }
   }
 }

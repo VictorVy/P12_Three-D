@@ -96,6 +96,7 @@ void addObjects()
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
 
   objects.add(new FocusIndicator(blockSize / 2));
+  objects.add(new SnowCloud(200, 50, 200, 250));
 
   addWorld();
 }

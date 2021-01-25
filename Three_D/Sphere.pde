@@ -13,7 +13,7 @@ class Sphere extends Object //generic sphere
   
   void show()
   {
-    super.show();
+    world.fill(colour);
     
     world.stroke(0);
     world.strokeWeight(0.4);

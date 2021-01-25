@@ -50,7 +50,7 @@ class RPrism extends Object //generic rectangular prism
   
   void show()
   {
-    super.show();
+    world.fill(colour);
     
     world.pushMatrix();
     
