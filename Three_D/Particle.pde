@@ -8,15 +8,15 @@ class Particle extends Object
     super();
     
     this.pos = pos;
-    dir = new PVector(random(-10, 10), random(-4, 0.1), random(-10, 10)); //why do they all go the same direction? it's random isn't it?
-    speed = random(3, 5);
+    dir = new PVector(random(-10, 10), random(-10, 1), random(-10, 10));
+    speed = random(4, 8);
     colour = white;
     size = random(2, 6);
     alpha = random(200, 255);
     alphaSpeed = random(10, 20);
     deceleration = random(0.01, 0.1);
-    gravity = random(0.2, 0.8);
-    gravitySpeed = random(0.05, 0.2);
+    gravity = random(0.5, 1.5);
+    gravitySpeed = random(0.1, 0.5);
   }
   
   void show()
