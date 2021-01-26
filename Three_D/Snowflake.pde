@@ -1,6 +1,6 @@
 class Snowflake extends Object
 {
-  float speed, size, alpha;
+  float speed, driftSpeed;
   
   public Snowflake(PVector pos)
   {
@@ -10,20 +10,21 @@ class Snowflake extends Object
     alpha = random(200, 255);
     this.pos = pos; 
     colour = 225;
+    driftSpeed = random(0.5, 1.5);
   }
   
   void show()
   {
-    world.pushMatrix();
-    world.translate(pos.x, pos.y, pos.z);
-    world.fill(colour, alpha);
-    world.noStroke();
-    world.box(size);
-    world.popMatrix();
+    super.show();
   }
   
   void act()
   {
+    if(random(-1, 4) < 0) pos.x += driftSpeed;
+    if(random(-1, 4) < 0) pos.x -= driftSpeed;
+    if(random(-1, 4) < 0) pos.z += driftSpeed;
+    if(random(-1, 4) < 0) pos.z -= driftSpeed;
+    
     if(pos.y < height - blockSize)
       pos.y += speed;
     else

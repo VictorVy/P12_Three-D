@@ -1,7 +1,5 @@
 class Sphere extends Object //generic sphere
-{
-  float size;
-  
+{  
   public Sphere(PVector pos, float size, color colour)
   {
     super();

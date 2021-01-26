@@ -16,7 +16,7 @@ void worldDraw()
   shootTimer++;
 
   wrapMouse();
-  drawObjects();
+  updateGameObjects();
   
   world.endDraw();
 }

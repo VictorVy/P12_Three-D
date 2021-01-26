@@ -9,6 +9,8 @@ import java.awt.Robot;
 
 Robot mouseBot;
 
+int mode = 0, INTRO = 0, GAME = 1; //modes
+
 int blockSize = 100;
 int shootTimer = 0;
 int collideDist = 150;
@@ -33,10 +35,11 @@ color green = #00FF00;
 color grey = #9b9b9b;
 color brown = #bf8240;
 
-PGraphics world, hud;
+PGraphics intro, world, hud;
 
 void setup()
 {
+  intro = createGraphics(width, height, P3D);
   world = createGraphics(width, height, P3D);
   hud = createGraphics(width, height, P2D);
   
@@ -46,23 +49,17 @@ void setup()
   try{ mouseBot = new Robot(); }
   catch(Exception e) { e.printStackTrace(); }
 
-  camRotLR = radians(-90);
-  camPos = new PVector(width / 2, height - blockSize * 3, 1000);
-  camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
-  camUp = new PVector(0, 1, 0);
-  moveSpeed = 20;
-
   loadImages();
-  addObjects();
+
+  introSetup();
 }
 
 void draw()
 {
-  worldDraw();
-  image(world, 0, 0);
-  
-  hudDraw();
-  image(hud, 0, 0);
+  if(mode == INTRO)
+    introDraw();
+  else if(mode == GAME)
+    gameDraw();
 }
 
 void loadImages()
@@ -77,49 +74,4 @@ void loadImages()
   grassSideImg = loadImage("grassSide.jpg");
   mossyStoneBrickImg = loadImage("mossyStoneBrick.png");
   oakPlankImg = loadImage("oakPlank.png");
-}
-
-void addObjects()
-{
-  //traffic light (rotatable)
-  objects.add(new RPrism(new PVector(width / 2, height / 2, -200), width / 3, height, 100, 200));
-
-  objects.add(new Sphere(new PVector(width / 2, height / 2 - 175, 0), 75, color(0, 255, 0)));
-  objects.add(new Sphere(new PVector(width / 2, height / 2, 0), 75, color(255, 255, 0)));
-  objects.add(new Sphere(new PVector(width / 2, height / 2 + 175, 0), 75, color(255, 0, 0)));
-
-  //floating blocks (rotatable)
-  objects.add(new RPrism(new PVector(200, 200, 100), 150, grassTopImg, dirtImg, grassSideImg, grassSideImg, grassSideImg, grassSideImg));
-  objects.add(new RPrism(new PVector(width - 200, 200, 100), 150, grassTopImg, dirtImg, grassSideImg, grassSideImg, grassSideImg, grassSideImg));
-  objects.add(new RPrism(new PVector(width - 200, height - 200, 100), 150, dirtImg));
-  objects.add(new RPrism(new PVector(200, height - 200, 100), 150, dirtImg));
-
-  objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
-  objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
-
-  //third-person chracter
-  objects.add(new FocusIndicator(blockSize / 2));
-  
-  //snow clouds
-  objects.add(new SnowCloud(400, 25, 400, 250));
-  objects.add(new SnowCloud(new PVector(width / 2, -blockSize, 0), width, 25, 400));
-
-  addWorld();
-}
-
-void drawObjects()
-{
-  for(int i = 0; i < objects.size(); i++)
-  {
-    Object object = objects.get(i);
-    
-    object.act();
-    object.show();
-    
-    if(object.hp <= 0)
-    {
-      objects.remove(object);
-      i--;
-    }
-  }
 }

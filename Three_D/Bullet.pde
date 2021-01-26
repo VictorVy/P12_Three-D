@@ -1,6 +1,5 @@
 class Bullet extends Object
 {
-  int size;
   PVector dir;
   float speed, gravity, gravitySpeed;
   
@@ -29,12 +28,7 @@ class Bullet extends Object
   
   void show()
   {
-    world.pushMatrix();
-    world.translate(pos.x, pos.y, pos.z);
-    world.fill(colour, alpha);
-    world.noStroke();
-    world.box(size);
-    world.popMatrix();
+    super.show();
   }
   
   void act()

@@ -1,0 +1,5 @@
+improved cursor movement (no wonky jittering/shaking)
+vertical movement (shift/space to move up/down)
+third-person view (mouse scroll wheel to zoom in/out)
+snow cloud (randomly produces randomly-moving snowflakes under itself) (one follows the player around)
+mode framework

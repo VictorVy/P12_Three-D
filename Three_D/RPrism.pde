@@ -2,8 +2,8 @@ class RPrism extends Object //generic rectangular prism
 {
   float w, h, d;
   PImage topImg, botImg, frontImg, backImg, leftImg, rightImg;
-  boolean rotatable;
   
+  public RPrism() {} //hmmm
   public RPrism(PVector pos, float size, color colour) //untextured cube
   {
     super();
@@ -61,7 +61,7 @@ class RPrism extends Object //generic rectangular prism
     if(textured)
     {
       world.noStroke();
-      world.scale(100);
+      world.scale(blockSize);
       
       //top
       world.beginShape(QUADS);

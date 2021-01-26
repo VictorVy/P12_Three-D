@@ -44,7 +44,7 @@ class SnowCloud extends Object
   
   void act()
   {
-    if(random(-1, 1) > 0)
+    if(random(-1, 1) < 0)
       objects.add(new Snowflake(new PVector(random(pos.x - w / 2, pos.x + w / 2), pos.y, random(pos.z - d / 2, pos.z + d / 2))));
   }
 }

@@ -1,7 +1,7 @@
 class Particle extends Object
 {
   PVector dir;
-  float speed, size, alpha, alphaSpeed, deceleration, gravity, gravitySpeed;
+  float speed, alphaSpeed, deceleration, gravity, gravitySpeed;
   
   public Particle(PVector pos)
   {
@@ -21,12 +21,7 @@ class Particle extends Object
   
   void show()
   {
-    world.pushMatrix();
-    world.translate(pos.x, pos.y, pos.z);
-    world.fill(colour, alpha);
-    world.noStroke();
-    world.box(size);
-    world.popMatrix();
+    super.show();
   }
   
   void act()
