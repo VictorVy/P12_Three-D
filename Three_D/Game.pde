@@ -1,5 +1,7 @@
 void gameSetup()
 {
+  noCursor();
+  
   camRotLR = radians(-90);
   camPos = new PVector(width / 2, height - blockSize * 3, 1000);
   camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
@@ -23,7 +25,7 @@ void addGameObjects()
   objects.clear();
   
   //traffic light (rotatable)
-  objects.add(new RPrism(new PVector(width / 2, height / 2, -200), width / 3, height, 100, 200));
+  objects.add(new RPrism(new PVector(width / 2, height / 2.5, -200), width / 3, height, 100, dirtImg));
 
   objects.add(new Sphere(new PVector(width / 2, height / 2 - 175, 0), 75, color(0, 255, 0)));
   objects.add(new Sphere(new PVector(width / 2, height / 2, 0), 75, color(255, 255, 0)));
@@ -38,7 +40,7 @@ void addGameObjects()
   objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
 
-  //third-person chracter
+  //third-person character
   objects.add(new FocusIndicator(blockSize / 2));
   
   //snow clouds

@@ -1,7 +1,7 @@
 class Button extends RPrism
 {
   String text;
-  float rotX, rotY, rotSpeed;
+  float rotX, rotY, rotXSpeed, rotYSpeed, rotAccel;
   
   public Button(PVector pos, float w, float h, float d, PImage texture, String text) //textured rectangular prism (same texture on all faces)
   {
@@ -15,11 +15,14 @@ class Button extends RPrism
     this.text = text;
     textured = true;
     rotX = rotY = 0;
-    rotSpeed = radians(3);
+    rotXSpeed = random(-1, 1) < 0 ? -radians(0.5) : radians(0.5);
+    rotYSpeed = random(-1, 1) < 0 ? -radians(0.5) : radians(0.5);
+    rotAccel = radians(0.01);
   }
   
   void show()
-  {    
+  {
+    //unfortunately can't use super.show() because different PGraphics :^(
     intro.pushMatrix();
     
     intro.translate(pos.x, pos.y, pos.z);
@@ -84,12 +87,31 @@ class Button extends RPrism
     intro.vertex(wi, he, -de, 0, 1);
     intro.endShape();
     
+    intro.fill(mHover() ? black : white);
+    intro.textAlign(CENTER);
+    intro.textSize(h / 1.5);
+    intro.text(text, 0, he / 2.5, de + 1);
+    
     intro.popMatrix();
   }
   
   void act()
   {
-    rotX += rotSpeed;
-    rotY += rotSpeed;
+    if(!mHover())
+    {
+      if(rotX >= radians(5))
+        rotXSpeed -= rotAccel;
+      else if(rotX <= -radians(5))
+        rotXSpeed += rotAccel;
+      if(rotY >= radians(15))
+        rotYSpeed -= rotAccel;
+      else if(rotY <= -radians(15))
+        rotYSpeed += rotAccel;  
+    
+      rotX += rotXSpeed;
+      rotY += rotYSpeed;
+    }
   }
+  
+  boolean mHover() { return mouseX >= pos.x - w / 2 && mouseX <= pos.x + w / 2 && mouseY >= pos.y - h / 2 && mouseY <= pos.y + h / 2; }
 }

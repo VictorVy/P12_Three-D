@@ -28,9 +28,9 @@ void handleFPCamera()
   if (strafeD)
     camPos.y += moveSpeed;
 
-  camFocusPos.x = camPos.x + cos(camRotLR) * 250;
-  camFocusPos.y = camPos.y + tan(camRotUD) * 250;
-  camFocusPos.z = camPos.z + sin(camRotLR) * 250;
+  camFocusPos.x = camPos.x + cos(camRotLR) * fpFocusDist;
+  camFocusPos.y = camPos.y + tan(camRotUD) * fpFocusDist;
+  camFocusPos.z = camPos.z + sin(camRotLR) * fpFocusDist;
 }
 
 void handleTPCamera()
@@ -64,8 +64,17 @@ void handleTPCamera()
     camFocusPos.y += moveSpeed;
 
   camPos.x = camFocusPos.x - cos(camRotLR) * tpCamDist;
-  camPos.y = camFocusPos.y - tan(camRotUD) * tpCamDist;
+  camPos.y = camFocusPos.y - tan(camRotUD) * tpCamDist; //hmmm
   camPos.z = camFocusPos.z - sin(camRotLR) * tpCamDist;
+  
+  if(camPos.y - camFocusPos.y > tpCamDist)
+    camPos.y = camFocusPos.y + tpCamDist;
+  else if(camFocusPos.y - camPos.y > tpCamDist)
+    camPos.y = camFocusPos.y - tpCamDist;
+    
+  //hmmm
+  //PVector xzDist = new PVector(camPos.x - camFocusPos.x, camPos.z - camFocusPos.z);
+  //xzDist.setMag(map(xzDist.mag(), 0, ));
 }
 
 void shoot() { objects.add(new Bullet()); }
@@ -81,8 +90,8 @@ boolean moveFront()
     z = camPos.z + sin(camRotLR) * collideDist;
     xR = camPos.x + cos(camRotLR + radians(20)) * collideDist;
     zR = camPos.z + sin(camRotLR + radians(20)) * collideDist;
-    xL = camPos.x - cos(camRotLR + radians(20)) * collideDist;
-    zL = camPos.z - sin(camRotLR + radians(20)) * collideDist;
+    xL = camPos.x + cos(camRotLR - radians(20)) * collideDist;
+    zL = camPos.z + sin(camRotLR - radians(20)) * collideDist;
   } else
   {
     x = camFocusPos.x + cos(camRotLR) * collideDist;

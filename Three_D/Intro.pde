@@ -1,5 +1,9 @@
 void introSetup()
 {
+  cursor();
+  
+  startButton = new Button(new PVector(width / 2, height / 2, 0), 300, 150, 50, dirtImg, "start");
+  
   addIntroObjects();
 }
 
@@ -22,7 +26,7 @@ void addIntroObjects()
   objects.clear();
   
   //buttons
-  objects.add(new Button(new PVector(width / 2, height / 2, 0), 300, 150, 50, dirtImg, "start"));
+  objects.add(startButton);
 }
 
 void introLights()
@@ -49,6 +53,9 @@ void updateIntroObjects()
 
 void introMR()
 {
-  gameSetup();
-  mode = GAME;
+  if(startButton.mHover())
+  {
+    gameSetup();
+    mode = GAME;
+  }
 }

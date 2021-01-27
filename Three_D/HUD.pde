@@ -32,7 +32,8 @@ void drawMinimap()
   
   hud.textSize(30);
   hud.fill(white);
-  hud.text("(" + mapX + ", " + mapY + ")", 50, 300);
+  hud.text("(" + mapX + ", " + mapY + ")", 50, 300); //coordinates
+  hud.text("fps: " + String.valueOf(frameRate).substring(0, 5), 50, 350); //fps counter
   
   hud.stroke(255, 55, 55);
   hud.strokeWeight(4);

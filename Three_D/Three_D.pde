@@ -16,8 +16,9 @@ int shootTimer = 0;
 int collideDist = 150;
 int crosshairSize = 15;
 float rX, rY, moveSpeed, camRotLR, camRotUD;
+float fpFocusDist = 250;
 float tpCamDist = 750;
-float camZoomSpeed = 25;
+float camZoomSpeed = 34;
 
 PVector camPos, camFocusPos, camUp;
 
@@ -37,6 +38,8 @@ color brown = #bf8240;
 
 PGraphics intro, world, hud;
 
+Button startButton;
+
 void setup()
 {
   intro = createGraphics(width, height, P3D);
@@ -44,7 +47,6 @@ void setup()
   hud = createGraphics(width, height, P2D);
   
   size(displayWidth, displayHeight, P2D);
-  noCursor();
 
   try{ mouseBot = new Robot(); }
   catch(Exception e) { e.printStackTrace(); }
