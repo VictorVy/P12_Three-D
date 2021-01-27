@@ -31,6 +31,7 @@ void drawMinimap()
   int mapY = int((thirdPerson ? camFocusPos.z : camPos.z) + (blockSize * blockSize) / 2) / blockSize;
   
   hud.textSize(30);
+  hud.fill(white);
   hud.text("(" + mapX + ", " + mapY + ")", 50, 300);
   
   hud.stroke(255, 55, 55);

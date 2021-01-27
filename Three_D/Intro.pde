@@ -46,3 +46,9 @@ void updateIntroObjects()
     }
   }
 }
+
+void introMR()
+{
+  gameSetup();
+  mode = GAME;
+}
