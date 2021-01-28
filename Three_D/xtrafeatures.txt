@@ -3,3 +3,4 @@ vertical movement (shift/space to move up/down)
 third-person view (mouse scroll wheel to zoom in/out)
 snow cloud (randomly produces randomly-moving snowflakes under itself) (one follows the player around)
 mode framework
+cool intro (kinda) (title "looks" at mouse) ("floating" buttons)

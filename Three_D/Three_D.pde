@@ -37,14 +37,17 @@ color grey = #9b9b9b;
 color brown = #bf8240;
 
 PGraphics intro, world, hud;
+PFont mcTitle, mcRegular;
 
-Button startButton;
+Button startButton, exitButton;
 
 void setup()
 {
   intro = createGraphics(width, height, P3D);
   world = createGraphics(width, height, P3D);
   hud = createGraphics(width, height, P2D);
+  mcTitle = createFont("mcTitle.ttf", 256);
+  mcRegular = createFont("mcRegular.ttf", 128);
   
   size(displayWidth, displayHeight, P2D);
 

@@ -89,7 +89,8 @@ class Button extends RPrism
     
     intro.fill(mHover() ? black : white);
     intro.textAlign(CENTER);
-    intro.textSize(h / 1.5);
+    intro.textFont(mcRegular);
+    intro.textSize(h);
     intro.text(text, 0, he / 2.5, de + 1);
     
     intro.popMatrix();
