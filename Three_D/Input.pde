@@ -34,6 +34,8 @@ void keyReleased()
 {
   if(mode == GAME)
     gameKR();
+  else if(mode == PAUSE)
+    pauseKR();
 }
 
 void wrapMouse()

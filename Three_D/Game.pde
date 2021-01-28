@@ -154,6 +154,10 @@ void gameKR()
     case ' ':
       strafeU = false;
       break;
+    case 'p':
+      pauseSetup();
+      mode = PAUSE;
+      break;
   }
   
   switch(keyCode)

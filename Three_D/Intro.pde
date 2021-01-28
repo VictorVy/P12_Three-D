@@ -14,7 +14,7 @@ void introDraw()
   intro.background(0);
   intro.textureMode(NORMAL);
   
-  title();
+  titleText();
   
   introLights();
   updateIntroObjects();
@@ -33,7 +33,7 @@ void addIntroObjects()
   objects.add(exitButton);
 }
 
-void title()
+void titleText()
 {
   intro.textFont(mcTitle);
   intro.textSize(196);

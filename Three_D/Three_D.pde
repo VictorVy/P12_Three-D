@@ -9,7 +9,7 @@ import java.awt.Robot;
 
 Robot mouseBot;
 
-int mode = 0, INTRO = 0, GAME = 1; //modes
+int mode = 0, INTRO = 0, GAME = 1, PAUSE = 2; //modes
 
 int blockSize = 100;
 int shootTimer = 0;
@@ -29,6 +29,7 @@ ArrayList<Object> objects = new ArrayList();
 
 PImage diamondImg, dirtImg, grassTopImg, grassSideImg, mossyStoneBrickImg, oakPlankImg;
 PImage floorMap, wallMap, ceilingMap;
+PImage screenCap;
 
 color white = #FFFFFF;
 color black = #000000;
@@ -36,7 +37,7 @@ color green = #00FF00;
 color grey = #9b9b9b;
 color brown = #bf8240;
 
-PGraphics intro, world, hud;
+PGraphics intro, world, hud, pause;
 PFont mcTitle, mcRegular;
 
 Button startButton, exitButton;
@@ -46,6 +47,7 @@ void setup()
   intro = createGraphics(width, height, P3D);
   world = createGraphics(width, height, P3D);
   hud = createGraphics(width, height, P2D);
+  pause = createGraphics(width, height, P3D);
   mcTitle = createFont("mcTitle.ttf", 256);
   mcRegular = createFont("mcRegular.ttf", 128);
   
@@ -65,6 +67,8 @@ void draw()
     introDraw();
   else if(mode == GAME)
     gameDraw();
+  else if(mode == PAUSE)
+    pauseDraw();
 }
 
 void loadImages()
