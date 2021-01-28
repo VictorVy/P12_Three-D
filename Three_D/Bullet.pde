@@ -23,7 +23,7 @@ class Bullet extends Object
     
     dir.setMag(speed = 50);
     gravity = 1;
-    gravitySpeed = 0.5;
+    gravitySpeed = 0.75;
   }
   
   void show()

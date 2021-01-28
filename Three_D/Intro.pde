@@ -2,7 +2,7 @@ void introSetup()
 {
   cursor();
     
-  startButton = new Button(new PVector(width / 2, height / 2 + height / 10, 0), 300, 150, 50, dirtImg, "start");
+  startButton = new Button(new PVector(width / 2, height / 2 + height / 16, 0), 300, 150, 50, dirtImg, "start");
   exitButton = new Button(new PVector(width / 2, height / 2 + height / 4, 0), 250, 125, 44, dirtImg, "exit");
   
   addIntroObjects();
@@ -57,7 +57,8 @@ void title()
 
 void introLights()
 {
-  
+  intro.pointLight(225, 225, 225, width / 2, height / 2 + height / 4, 200);
+  intro.pointLight(225, 225, 225, width / 2, height / 2 - height / 4, 200);
 }
 
 void updateIntroObjects()

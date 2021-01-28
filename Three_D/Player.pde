@@ -64,17 +64,12 @@ void handleTPCamera()
     camFocusPos.y += moveSpeed;
 
   camPos.x = camFocusPos.x - cos(camRotLR) * tpCamDist;
-  camPos.y = camFocusPos.y - tan(camRotUD) * tpCamDist; //hmmm
+  camPos.y = camFocusPos.y - tan(camRotUD) * tpCamDist;
   camPos.z = camFocusPos.z - sin(camRotLR) * tpCamDist;
-  
-  if(camPos.y - camFocusPos.y > tpCamDist)
-    camPos.y = camFocusPos.y + tpCamDist;
-  else if(camFocusPos.y - camPos.y > tpCamDist)
-    camPos.y = camFocusPos.y - tpCamDist;
     
-  //hmmm
-  //PVector xzDist = new PVector(camPos.x - camFocusPos.x, camPos.z - camFocusPos.z);
-  //xzDist.setMag(map(xzDist.mag(), 0, ));
+  PVector spherinator = new PVector(camPos.x - camFocusPos.x, camPos.y - camFocusPos.y, camPos.z - camFocusPos.z);
+  spherinator.setMag(tpCamDist);
+  camPos = camFocusPos.copy().add(spherinator);
 }
 
 void shoot() { objects.add(new Bullet()); }
