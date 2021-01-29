@@ -46,6 +46,7 @@ void pauseKR()
   switch(key)
   {
     case 'p':
+      noCursor();
       mode = GAME;
       break;
   }

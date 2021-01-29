@@ -45,7 +45,7 @@ class Bullet extends Object
     else
     {
       hp--;
-      for(int i = 0; i < 24; i++)
+      for(int i = 0; i < 18; i++)
         objects.add(new Particle(pos.copy()));
     }
   }

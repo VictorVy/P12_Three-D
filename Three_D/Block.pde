@@ -30,7 +30,7 @@ class Block extends Object //specialised minecraft-like block
   void show()
   { 
     world.pushMatrix();
-    world.translate(-(blockSize * blockSize) / 2 + pos.x, height + pos.y, -(blockSize * blockSize) / 2 + pos.z);
+    world.translate(-(blockSize * blockSize) / 2 + pos.x, height - pos.y, -(blockSize * blockSize) / 2 + pos.z);
     
     world.noStroke();
     world.scale(size);

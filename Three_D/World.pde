@@ -41,7 +41,7 @@ void addWorld() //using img to map out floor
         else if (colour == #bf8240) image = oakPlankImg;
         else image = dirtImg;
   
-        objects.add(new Block(new PVector(c * blockSize, -blockSize, r * blockSize), blockSize, image));
+        objects.add(new FloorBlock(new PVector(c * blockSize, blockSize, r * blockSize), blockSize, image));
       }
       
       //walls
@@ -55,9 +55,9 @@ void addWorld() //using img to map out floor
         else if (colour == #bf8240) image = oakPlankImg;
         else image = dirtImg;
   
-        objects.add(new Block(new PVector(c * blockSize, -blockSize * 2, r * blockSize), blockSize, image));
-        objects.add(new Block(new PVector(c * blockSize, -blockSize * 3, r * blockSize), blockSize, image));
-        objects.add(new Block(new PVector(c * blockSize, -blockSize * 4, r * blockSize), blockSize, image));
+        objects.add(new Block(new PVector(c * blockSize, blockSize * 2, r * blockSize), blockSize, image));
+        objects.add(new Block(new PVector(c * blockSize, blockSize * 3, r * blockSize), blockSize, image));
+        objects.add(new Block(new PVector(c * blockSize, blockSize * 4, r * blockSize), blockSize, image));
       }
 
       //ceiling
@@ -71,7 +71,7 @@ void addWorld() //using img to map out floor
         else if (colour == #bf8240) image = oakPlankImg;
         else image = dirtImg;
   
-        objects.add(new Block(new PVector(c * blockSize, -height, r * blockSize), blockSize, image));
+        objects.add(new Block(new PVector(c * blockSize, height * 2, r * blockSize), blockSize, image));
       }
     }
   }

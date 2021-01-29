@@ -44,8 +44,10 @@ void addGameObjects()
   objects.add(new FocusIndicator(blockSize / 2));
   
   //snow clouds
-  objects.add(new SnowCloud(400, 25, 400, 250));
+  objects.add(new SnowCloud(400, 25, 400, 400));
   objects.add(new SnowCloud(new PVector(width / 2, -blockSize, 0), width, 25, 400));
+  
+  objects.add(new Enemy(new PVector(0, blockSize, 500), dirtImg));
 
   addWorld();
 }

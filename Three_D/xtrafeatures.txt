@@ -1,6 +1,13 @@
 improved cursor movement (no wonky jittering/shaking)
+
 vertical movement (shift/space to move up/down)
+
 third-person view (mouse scroll wheel to zoom in/out) (with improved camera movement!)
+
 snow cloud (randomly produces randomly-moving snowflakes under itself) (one follows the player around)
-mode framework (press 'p' to pause/unpause)
-cool intro (title "looks" at mouse) ("floating" buttons)
+
+mode framework (press 'p' to pause/unpause) 
+
+"cool" intro (title "looks" at mouse) ("floating" buttons)
+
+object heirarchy (eg. Button extends RPrism, FloorBlock extends Block)
