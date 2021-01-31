@@ -5,6 +5,8 @@
 /*                               */
 ///////////////////////////////////
 
+//apologies, the organization is terrible because I wanted to combine all the 3D stuff into one project :^(
+
 import java.awt.Robot;
 
 Robot mouseBot;
@@ -83,4 +85,9 @@ void loadImages()
   grassSideImg = loadImage("grassSide.jpg");
   mossyStoneBrickImg = loadImage("mossyStoneBrick.png");
   oakPlankImg = loadImage("oakPlank.png");
+}
+
+float expMap(float num, float exp, float lBound1, float uBound1, float lBound2, float uBound2)
+{
+  return map((float) Math.pow(map(num, lBound1, uBound1, 0, 1), exp), 0, 1, lBound2, uBound2);
 }

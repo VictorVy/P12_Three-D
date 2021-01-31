@@ -72,7 +72,7 @@ void handleTPCamera()
   camPos = camFocusPos.copy().add(spherinator);
 }
 
-void shoot() { objects.add(new Bullet()); }
+void shoot() { objects.add(new PlayerBullet()); }
 
 boolean moveFront()
 {

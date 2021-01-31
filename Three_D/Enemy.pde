@@ -2,6 +2,7 @@ class Enemy extends Object
 {
   PVector dir;
   PImage img;
+  int shootTimer, range;
   
   public Enemy(PVector pos, PImage img)
   {
@@ -9,6 +10,8 @@ class Enemy extends Object
     
     this.pos = pos;
     this.img = img;
+    shootTimer = 0;
+    range = blockSize * 40;
   }
   
   void show()
@@ -36,8 +39,16 @@ class Enemy extends Object
   
   void act()
   {
-    
-    
-    
+    shootTimer++;
+    if(shootTimer > 60 && dist(pos.x, pos.z, camPos.x, camPos.z) <= range)
+    {
+      shoot();
+      shootTimer = 0;
+    } 
+  }
+  
+  void shoot()
+  {
+    objects.add(new EnemyBullet(new PVector(pos.x, pos.y + img.height * 1.25, pos.z), expMap(dist(pos.x, pos.z, thirdPerson? camFocusPos.x : camPos.x, thirdPerson ? camFocusPos.z : camPos.z), 2.2, 0, range, 0, range / 1.25))); //unhealthy addiction to the ternary operator
   }
 }

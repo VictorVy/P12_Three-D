@@ -13,7 +13,7 @@ class Particle extends Object
     colour = white;
     size = random(2, 6);
     alpha = random(200, 255);
-    alphaSpeed = random(10, 20);
+    alphaSpeed = random(10, 15);
     deceleration = random(0.01, 0.1);
     gravity = random(0.5, 1.5);
     gravitySpeed = random(0.1, 0.5);

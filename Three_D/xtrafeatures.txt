@@ -8,6 +8,8 @@ snow cloud (randomly produces randomly-moving snowflakes under itself) (one foll
 
 mode framework (press 'p' to pause/unpause) 
 
-"cool" intro (title "looks" at mouse) ("floating" buttons)
+"interesting" intro (title "looks" at mouse) ("floating" buttons)
 
-object heirarchy (eg. Button extends RPrism, FloorBlock extends Block)
+object heirarchy (eg. Button extends RPrism, FloorBlock extends Block) (abstract Bullet class)
+
+enemies aim more accurately (exponential mapping function) (also range cutoff)
