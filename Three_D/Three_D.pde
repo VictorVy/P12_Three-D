@@ -11,12 +11,14 @@ import java.awt.Robot;
 
 Robot mouseBot;
 
-int mode = 0, INTRO = 0, GAME = 1, PAUSE = 2; //modes
+int mode = 0, INTRO = 0, GAME = 1, PAUSE = 2, GAMEOVER = 3; //modes
 
+int pLives, deathWindowDist;
 int blockSize = 100;
 int shootTimer = 0;
 int collideDist = 150;
 int crosshairSize = 15;
+int dmgAlpha = 0;
 float rX, rY, moveSpeed, camRotLR, camRotUD;
 float fpFocusDist = 250;
 float tpCamDist = 750;
@@ -39,17 +41,16 @@ color green = #00FF00;
 color grey = #9b9b9b;
 color brown = #bf8240;
 
-PGraphics intro, world, hud, pause;
+PGraphics layer, world, hud;
 PFont mcTitle, mcRegular;
 
-Button startButton, exitButton;
+Button startButton, exitButton, retryButton;
 
 void setup()
 {
-  intro = createGraphics(width, height, P3D);
+  layer = createGraphics(width, height, P3D);
   world = createGraphics(width, height, P3D);
   hud = createGraphics(width, height, P2D);
-  pause = createGraphics(width, height, P3D);
   mcTitle = createFont("mcTitle.ttf", 256);
   mcRegular = createFont("mcRegular.ttf", 128);
   
@@ -71,6 +72,8 @@ void draw()
     gameDraw();
   else if(mode == PAUSE)
     pauseDraw();
+  else if(mode == GAMEOVER)
+    gameOverDraw();
 }
 
 void loadImages()
@@ -87,7 +90,52 @@ void loadImages()
   oakPlankImg = loadImage("oakPlank.png");
 }
 
+void updateObjects()
+{
+  for(int i = 0; i < objects.size(); i++)
+  {
+    Object object = objects.get(i);
+    
+    object.act();
+    object.show();
+    
+    if(object.hp <= 0)
+    {
+      objects.remove(object);
+      i--;
+    }
+  }
+}
+
 float expMap(float num, float exp, float lBound1, float uBound1, float lBound2, float uBound2)
 {
-  return map((float) Math.pow(map(num, lBound1, uBound1, 0, 1), exp), 0, 1, lBound2, uBound2);
+  return map((float) Math.pow(norm(num, lBound1, uBound1), exp), 0, 1, lBound2, uBound2);
+}
+
+void bigText(String text)
+{
+  layer.textFont(mcTitle);
+  layer.textSize(196);
+  layer.textAlign(CENTER, CENTER);
+  layer.fill(white);
+  
+  layer.pushMatrix();
+  layer.translate(width / 2, height / 4, 200);
+
+  float rotX = map(mouseY, 0, height / 4 - blockSize, radians(70), radians(5));
+  float rotY = map(mouseX, 0, width, -radians(85), radians(85));
+  if(rotX < -radians(100)) rotX = -radians(100);
+  
+  layer.rotateX(rotX);
+  layer.rotateY(rotY);
+  
+  layer.text(text, 0, 0, 0);
+  
+  layer.popMatrix();
+}
+
+void layerLights()
+{
+  layer.pointLight(225, 225, 225, width / 2, height / 2 + height / 4, 200);
+  layer.pointLight(225, 225, 225, width / 2, height / 2 - height / 4, 200);
 }

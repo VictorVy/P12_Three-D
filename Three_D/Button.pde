@@ -23,77 +23,77 @@ class Button extends RPrism
   void show()
   {
     //unfortunately can't use super.show() because different PGraphics :^(
-    intro.pushMatrix();
+    layer.pushMatrix();
     
-    intro.translate(pos.x, pos.y, pos.z);
-    intro.rotateX(rotX);
-    intro.rotateY(rotY);
+    layer.translate(pos.x, pos.y, pos.z);
+    layer.rotateX(rotX);
+    layer.rotateY(rotY);
     
-    intro.noStroke();
+    layer.noStroke();
     
     float wi = w / 2, he = h / 2, de = d / 2;
     
     //top    
-    intro.beginShape(QUADS);
-    intro.texture(topImg);
-    intro.vertex(-wi, -he, -de, 0, 0);
-    intro.vertex(wi, -he, -de, 1, 0);
-    intro.vertex(wi, -he, de, 1, 1);
-    intro.vertex(-wi, -he, de, 0, 1);
-    intro.endShape();
+    layer.beginShape(QUADS);
+    layer.texture(topImg);
+    layer.vertex(-wi, -he, -de, 0, 0);
+    layer.vertex(wi, -he, -de, 1, 0);
+    layer.vertex(wi, -he, de, 1, 1);
+    layer.vertex(-wi, -he, de, 0, 1);
+    layer.endShape();
     
     //bottom
-    intro.beginShape(QUADS);
-    intro.texture(botImg);
-    intro.vertex(-wi, he, -de, 0, 0);
-    intro.vertex(wi, he, -de, 1, 0);
-    intro.vertex(wi, he, de, 1, 1);
-    intro.vertex(-wi, he, de, 0, 1);
-    intro.endShape();
+    layer.beginShape(QUADS);
+    layer.texture(botImg);
+    layer.vertex(-wi, he, -de, 0, 0);
+    layer.vertex(wi, he, -de, 1, 0);
+    layer.vertex(wi, he, de, 1, 1);
+    layer.vertex(-wi, he, de, 0, 1);
+    layer.endShape();
     
     //front
-    intro.beginShape(QUADS);
-    intro.texture(frontImg);
-    intro.vertex(-wi, -he, de, 0, 0);
-    intro.vertex(wi, -he, de, 1, 0);
-    intro.vertex(wi, he, de, 1, 1);
-    intro.vertex(-wi, he, de, 0, 1);
-    intro.endShape();
+    layer.beginShape(QUADS);
+    layer.texture(frontImg);
+    layer.vertex(-wi, -he, de, 0, 0);
+    layer.vertex(wi, -he, de, 1, 0);
+    layer.vertex(wi, he, de, 1, 1);
+    layer.vertex(-wi, he, de, 0, 1);
+    layer.endShape();
     
     //back
-    intro.beginShape(QUADS);
-    intro.texture(backImg);
-    intro.vertex(-wi, -he, -de, 0, 0);
-    intro.vertex(wi, -he, -de, 1, 0);
-    intro.vertex(wi, he, -de, 1, 1);
-    intro.vertex(-wi, he, -de, 0, 1);
-    intro.endShape();
+    layer.beginShape(QUADS);
+    layer.texture(backImg);
+    layer.vertex(-wi, -he, -de, 0, 0);
+    layer.vertex(wi, -he, -de, 1, 0);
+    layer.vertex(wi, he, -de, 1, 1);
+    layer.vertex(-wi, he, -de, 0, 1);
+    layer.endShape();
     
     //left
-    intro.beginShape(QUADS);
-    intro.texture(leftImg);
-    intro.vertex(-wi, -he, -de, 0, 0);
-    intro.vertex(-wi, -he, de, 1, 0);
-    intro.vertex(-wi, he, de, 1, 1);
-    intro.vertex(-wi, he, -de, 0, 1);
-    intro.endShape();
+    layer.beginShape(QUADS);
+    layer.texture(leftImg);
+    layer.vertex(-wi, -he, -de, 0, 0);
+    layer.vertex(-wi, -he, de, 1, 0);
+    layer.vertex(-wi, he, de, 1, 1);
+    layer.vertex(-wi, he, -de, 0, 1);
+    layer.endShape();
     
     //right
-    intro.beginShape(QUADS);
-    intro.texture(rightImg);
-    intro.vertex(wi, -he, -de, 0, 0);
-    intro.vertex(wi, -he, de, 1, 0);
-    intro.vertex(wi, he, de, 1, 1);
-    intro.vertex(wi, he, -de, 0, 1);
-    intro.endShape();
+    layer.beginShape(QUADS);
+    layer.texture(rightImg);
+    layer.vertex(wi, -he, -de, 0, 0);
+    layer.vertex(wi, -he, de, 1, 0);
+    layer.vertex(wi, he, de, 1, 1);
+    layer.vertex(wi, he, -de, 0, 1);
+    layer.endShape();
     
-    intro.fill(mHover() ? black : white);
-    intro.textAlign(CENTER);
-    intro.textFont(mcRegular);
-    intro.textSize(h);
-    intro.text(text, 0, he / 2.5, de + 1);
+    layer.fill(mHover() ? black : white);
+    layer.textAlign(CENTER);
+    layer.textFont(mcRegular);
+    layer.textSize(h);
+    layer.text(text, 0, he / 2.5, de + 1);
     
-    intro.popMatrix();
+    layer.popMatrix();
   }
   
   void act()

@@ -7,6 +7,7 @@ void gameSetup()
   camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
   camUp = new PVector(0, 1, 0);
   moveSpeed = 20;
+  pLives = 1;
   
   addGameObjects();
 }
@@ -18,6 +19,7 @@ void gameDraw()
   
   image(world, 0, 0);
   image(hud, 0, 0);
+  if(pLives <= 0) screenCap = get(); //janky solution to a frustrating problem
 }
 
 void addGameObjects()
@@ -40,7 +42,7 @@ void addGameObjects()
   objects.add(new RPrism(new PVector(200, height / 2, 0), 150, diamondImg));
   objects.add(new RPrism(new PVector(width - 200, height / 2, 0), 150, diamondImg));
 
-  //third-person character
+  //third-person "character"
   objects.add(new FocusIndicator(blockSize / 2));
   
   //snow clouds
@@ -50,23 +52,6 @@ void addGameObjects()
   objects.add(new Enemy(new PVector(0, blockSize, 500), dirtImg));
 
   addWorld();
-}
-
-void updateGameObjects()
-{
-  for(int i = 0; i < objects.size(); i++)
-  {
-    Object object = objects.get(i);
-    
-    object.act();
-    object.show();
-    
-    if(object.hp <= 0)
-    {
-      objects.remove(object);
-      i--;
-    }
-  }
 }
 
 void gameMR()

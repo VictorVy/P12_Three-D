@@ -1,3 +1,5 @@
+//I should probably make a Player class
+
 void handleFPCamera()
 {
   world.camera(camPos.x, camPos.y, camPos.z, camFocusPos.x, camFocusPos.y, camFocusPos.z, camUp.x, camUp.y, camUp.z);

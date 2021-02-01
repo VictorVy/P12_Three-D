@@ -40,7 +40,7 @@ class Enemy extends Object
   void act()
   {
     shootTimer++;
-    if(shootTimer > 60 && dist(pos.x, pos.z, camPos.x, camPos.z) <= range)
+    if(shootTimer > 60 && dist(pos.x, pos.z, camPos.x, camPos.z) <= range && Math.abs((pos.y + img.height * 1.25) - (thirdPerson ? camFocusPos.y : camPos.y)) <= range / 4)
     {
       shoot();
       shootTimer = 0;
@@ -49,6 +49,6 @@ class Enemy extends Object
   
   void shoot()
   {
-    objects.add(new EnemyBullet(new PVector(pos.x, pos.y + img.height * 1.25, pos.z), expMap(dist(pos.x, pos.z, thirdPerson? camFocusPos.x : camPos.x, thirdPerson ? camFocusPos.z : camPos.z), 2.2, 0, range, 0, range / 1.25))); //unhealthy addiction to the ternary operator
+    objects.add(new EnemyBullet(new PVector(pos.x, pos.y + img.height * 1.25, pos.z), expMap(dist(pos.x, pos.z, thirdPerson? camFocusPos.x : camPos.x, thirdPerson ? camFocusPos.z : camPos.z), 2, 0, range, 0, range / 1.5))); //unhealthy addiction to the ternary operator
   }
 }

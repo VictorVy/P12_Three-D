@@ -6,9 +6,9 @@ third-person view (mouse scroll wheel to zoom in/out) (with improved camera move
 
 snow cloud (randomly produces randomly-moving snowflakes under itself) (one follows the player around)
 
-mode framework (press 'p' to pause/unpause) 
+mode framework (try out all the modes!) (press 'p' to pause/unpause)
 
-"interesting" intro (title "looks" at mouse) ("floating" buttons)
+"interesting" menus (text "looks" at mouse) ("floating" buttons)
 
 object heirarchy (eg. Button extends RPrism, FloorBlock extends Block) (abstract Bullet class)
 

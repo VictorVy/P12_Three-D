@@ -31,10 +31,13 @@ abstract class Bullet extends Object
       gravity += gravitySpeed;
     }
     else
-    {
-      hp--;
-      for(int i = 0; i < 18; i++)
-        objects.add(new Particle(pos.copy()));
-    }
+      die();
+  }
+  
+  void die()
+  {
+    for(int i = 0; i < 18; i++)
+      objects.add(new Particle(pos.copy()));
+    hp--;
   }
 }

@@ -10,4 +10,16 @@ class EnemyBullet extends Bullet
     
     dir.setMag(speed);
   }
+  
+  void act()
+  {
+    super.act();
+    
+    //collision
+    if(dist(pos.x, pos.y, pos.z, (thirdPerson ? camFocusPos.x : camPos.x), (thirdPerson ? camFocusPos.y : camPos.y), (thirdPerson ? camFocusPos.z : camPos.z)) <= size / 2 + blockSize / 4) //hitbox is a little janky
+    {
+      die();
+      pDamage();
+    }
+  }
 }

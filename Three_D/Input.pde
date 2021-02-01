@@ -4,6 +4,8 @@ void mouseReleased()
     gameMR();
   else if(mode == INTRO)
     introMR();
+  else if(mode == GAMEOVER)
+    gameOverMR();
 }
 
 void mouseDragged() //rotate objects
