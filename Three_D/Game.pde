@@ -7,7 +7,7 @@ void gameSetup()
   camFocusPos = new PVector(camPos.x, camPos.y, camPos.z);
   camUp = new PVector(0, 1, 0);
   moveSpeed = 20;
-  pLives = 1;
+  pLives = 3;
   
   addGameObjects();
 }
