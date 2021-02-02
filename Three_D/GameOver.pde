@@ -14,7 +14,8 @@ void gameOverDraw()
   layer.background(0);
   layer.textureMode(NORMAL);
   
-  layer.lights();
+  layerLights();
+  
   updateObjects();
   deathWindow();
   bigText("You Died");

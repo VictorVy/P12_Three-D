@@ -136,6 +136,6 @@ void bigText(String text)
 
 void layerLights()
 {
-  layer.pointLight(225, 225, 225, width / 2, height / 2 + height / 4, 200);
-  layer.pointLight(225, 225, 225, width / 2, height / 2 - height / 4, 200);
+  layer.pointLight(225, 225, 225, width / 2, height / 2 + height / 4, 350);
+  layer.pointLight(225, 225, 225, width / 2, height / 2 - height / 4, 350);
 }
