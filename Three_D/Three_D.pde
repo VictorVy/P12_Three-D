@@ -107,6 +107,7 @@ void updateObjects()
   }
 }
 
+//I took inspiration from this thread: https://forum.processing.org/two/discussion/17706/map-command-with-different-intervals
 float expMap(float num, float exp, float lBound1, float uBound1, float lBound2, float uBound2)
 {
   return map((float) Math.pow(norm(num, lBound1, uBound1), exp), 0, 1, lBound2, uBound2);
